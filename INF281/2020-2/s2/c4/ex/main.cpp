@@ -15,8 +15,28 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #include <iostream>
+#include <iomanip>
+#include <fstream>
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+using namespace std;
+
+int main(int argc, char** argv) {
+    int dd, mm, yy, serie, secuencia, referencia;
+    char del, tipo_doc, cliente;
+    float monto;
+
+//    cout << std::setprecision(2) << 2 << endl;
+
+    ifstream registro;
+    registro.open("Registro.txt");
+    cin.rdbuf(registro.rdbuf());
+
+    if (registro.is_open()) {
+        cin >> dd;
+        cout << dd << endl;
+    }
+
+
+    registro.close();
     return 0;
 }
