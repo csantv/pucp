@@ -22,9 +22,9 @@ set(ASM_SRC
 
 set_source_files_properties(${ASM_SRC} PROPERTIES LANGUAGE ASM_NASM)
 add_library(asm_funcs ${ASM_SRC})
-target_link_options(asm_funcs PRIVATE ${MY_FLAGS})
+set_target_properties(asm_funcs PROPERTIES LINK_OPTIONS "${MY_FLAGS}")
 
-# C sources
+# c sources
 set(C_SRC
     fuerte2.c
 )
