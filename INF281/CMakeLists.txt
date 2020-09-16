@@ -19,4 +19,4 @@ project(INF281 CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(INF281 2020-2/s2/c4/ex/main.cpp)
+add_executable(INF281 2019-2/l1/main.cpp)

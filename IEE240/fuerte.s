@@ -18,17 +18,22 @@ entrada resw 2
 segment .text
 
 main:
-	push str1
-	call printf
-	add esp, 4
+	;push str1
+	;call printf
+	;add esp, 4
 
-	push entrada
-	push str2
-	call scanf
-	add esp, 8
+	;push entrada
+	;push str2
+	;call scanf
+	;add esp, 8
 
-	push DWORD [entrada]
+	mov ecx, 1000000
+.loop:
+	;push DWORD [entrada]
+	push ecx
 	call es_fuerte
+	pop ecx
+	loop .loop
 	
 .end:
 	mov eax, 1
@@ -77,7 +82,8 @@ es_fuerte:
 	cmp eax, ebx
 	push eax
 	je .es_fuerte
-	jne .no_es_fuerte
+	;jne .no_es_fuerte
+	jne .exit
 .es_fuerte:
 	push str3
 	jmp .imprimir
@@ -86,7 +92,7 @@ es_fuerte:
 .imprimir:
 	call printf
 	add esp, 8
-
+.exit:
 	pop ebx
 	pop edi
 	pop esi
