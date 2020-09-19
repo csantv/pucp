@@ -28,10 +28,11 @@ imhist:
 ; -------------------------------------------- ;
 ; -------------------------------------------- ;
 
+	mov ebx, 4
 .loop:
-	; movzx eax, byte [edi]
-	movzx eax, byte [edi]
 	push esi
+	movzx eax, byte [edi]
+	mul ebx
 	add esi, eax
 	mov edx, [esi]
 	inc edx
