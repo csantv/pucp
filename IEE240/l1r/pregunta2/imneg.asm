@@ -1,9 +1,9 @@
 ; vi:ft=nasm
-global imhist
+global imneg
 
 section	.text
 
-imhist:
+imneg:
     ; Prólogo para calling conventions en 32 bits
     push ebp
     mov ebp, esp
@@ -19,7 +19,7 @@ imhist:
 
     ; Punteros iniciales (esto se inicializa en el archivo laboratorio0.c)
 	mov edi,[ebp + 8]   ; edi <- img
-    mov esi,[ebp + 12]  ; esi <- hist
+    mov esi,[ebp + 12]  ; esi <- outimg
     mov ecx,[ebp + 16]  ; ecx <- N_size
 
 ; -------------------------------------------- ;
@@ -28,14 +28,13 @@ imhist:
 ; -------------------------------------------- ;
 ; -------------------------------------------- ;
 
-	mov ebx, 4
 .loop:
-	movzx eax, byte [edi]
-	mul ebx
-	add esi, eax
-	inc DWORD [esi]
-	inc edi
-	mov esi, [ebp + 12]
+    mov eax, 255
+	mov edx, [edi]
+	sub eax, edx
+	mov [esi], eax
+    inc edi
+    inc esi
 	loop .loop
 
 ; -------------------------------------------- ;
