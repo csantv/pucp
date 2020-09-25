@@ -67,25 +67,31 @@
 
 
 /* First part of user prologue.  */
-#line 1 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
+#line 1 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
 
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
-#include <ctype.h>
-
+#include<stdlib.h>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<ctype.h>
+/*prototipos de funcion*/
+int yylex();
+void yyerror(char *s);
+int localizaSimbolo(char *nom,int token);
+void imprimeTablaSimbolos();
+/*estructuras*/
 typedef struct{
-	char nombre[20];    
-	int token;           
+	char nombre[100];    
+	int token; 
+	int tipodato;          
 	double valor;        
 }TipoTS;
 TipoTS tablaSimbolos[100];
+/*variables*/
+int nSim=0;
 char lexema[100];
 
-int yylex();
-void yyerror(char *s);
-
-#line 89 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+#line 95 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -110,8 +116,8 @@ void yyerror(char *s);
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_C4_PARSER_H_INCLUDED
-# define YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_C4_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_LAB2_PARSER_H_INCLUDED
+# define YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_LAB2_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -130,7 +136,25 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     NUMBER = 258,                  /* NUMBER  */
-    ID = 259                       /* ID  */
+    CARACTER = 259,                /* CARACTER  */
+    CADENA = 260,                  /* CADENA  */
+    ID = 261,                      /* ID  */
+    TIPO = 262,                    /* TIPO  */
+    DECLARAR = 263,                /* DECLARAR  */
+    ESIGUAL = 264,                 /* ESIGUAL  */
+    CONDICIONAL = 265,             /* CONDICIONAL  */
+    PARA = 266,                    /* PARA  */
+    BUCLE = 267,                   /* BUCLE  */
+    DECREMENTO = 268,              /* DECREMENTO  */
+    INCREMENTO = 269,              /* INCREMENTO  */
+    SWITCH = 270,                  /* SWITCH  */
+    CASOSWITCH = 271,              /* CASOSWITCH  */
+    PORDEFECTO = 272,              /* PORDEFECTO  */
+    MIENTRAS = 273,                /* MIENTRAS  */
+    MOSTRAR = 274,                 /* MOSTRAR  */
+    IMPLINEA = 275,                /* IMPLINEA  */
+    IMPNOMBRE = 276,               /* IMPNOMBRE  */
+    IMPTITULO = 277                /* IMPTITULO  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -147,7 +171,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_C4_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_LAB2_PARSER_H_INCLUDED  */
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -156,17 +180,70 @@ enum yysymbol_kind_t
   YYSYMBOL_YYerror = 1,                    /* error  */
   YYSYMBOL_YYUNDEF = 2,                    /* "invalid token"  */
   YYSYMBOL_NUMBER = 3,                     /* NUMBER  */
-  YYSYMBOL_ID = 4,                         /* ID  */
-  YYSYMBOL_5_ = 5,                         /* '+'  */
-  YYSYMBOL_6_ = 6,                         /* '-'  */
-  YYSYMBOL_7_ = 7,                         /* '*'  */
-  YYSYMBOL_8_ = 8,                         /* '('  */
-  YYSYMBOL_9_ = 9,                         /* ')'  */
-  YYSYMBOL_YYACCEPT = 10,                  /* $accept  */
-  YYSYMBOL_command = 11,                   /* command  */
-  YYSYMBOL_expr = 12,                      /* expr  */
-  YYSYMBOL_term = 13,                      /* term  */
-  YYSYMBOL_factor = 14                     /* factor  */
+  YYSYMBOL_CARACTER = 4,                   /* CARACTER  */
+  YYSYMBOL_CADENA = 5,                     /* CADENA  */
+  YYSYMBOL_ID = 6,                         /* ID  */
+  YYSYMBOL_TIPO = 7,                       /* TIPO  */
+  YYSYMBOL_DECLARAR = 8,                   /* DECLARAR  */
+  YYSYMBOL_ESIGUAL = 9,                    /* ESIGUAL  */
+  YYSYMBOL_CONDICIONAL = 10,               /* CONDICIONAL  */
+  YYSYMBOL_PARA = 11,                      /* PARA  */
+  YYSYMBOL_BUCLE = 12,                     /* BUCLE  */
+  YYSYMBOL_DECREMENTO = 13,                /* DECREMENTO  */
+  YYSYMBOL_INCREMENTO = 14,                /* INCREMENTO  */
+  YYSYMBOL_SWITCH = 15,                    /* SWITCH  */
+  YYSYMBOL_CASOSWITCH = 16,                /* CASOSWITCH  */
+  YYSYMBOL_PORDEFECTO = 17,                /* PORDEFECTO  */
+  YYSYMBOL_MIENTRAS = 18,                  /* MIENTRAS  */
+  YYSYMBOL_MOSTRAR = 19,                   /* MOSTRAR  */
+  YYSYMBOL_IMPLINEA = 20,                  /* IMPLINEA  */
+  YYSYMBOL_IMPNOMBRE = 21,                 /* IMPNOMBRE  */
+  YYSYMBOL_IMPTITULO = 22,                 /* IMPTITULO  */
+  YYSYMBOL_23_ = 23,                       /* '='  */
+  YYSYMBOL_24_ = 24,                       /* '<'  */
+  YYSYMBOL_25_ = 25,                       /* '>'  */
+  YYSYMBOL_26_ = 26,                       /* '!'  */
+  YYSYMBOL_27_ = 27,                       /* ':'  */
+  YYSYMBOL_28_ = 28,                       /* '#'  */
+  YYSYMBOL_29_ = 29,                       /* ','  */
+  YYSYMBOL_30_ = 30,                       /* '('  */
+  YYSYMBOL_31_ = 31,                       /* ')'  */
+  YYSYMBOL_32_ = 32,                       /* '+'  */
+  YYSYMBOL_33_ = 33,                       /* '-'  */
+  YYSYMBOL_34_ = 34,                       /* '*'  */
+  YYSYMBOL_YYACCEPT = 35,                  /* $accept  */
+  YYSYMBOL_listainst = 36,                 /* listainst  */
+  YYSYMBOL_instr = 37,                     /* instr  */
+  YYSYMBOL_asignacion = 38,                /* asignacion  */
+  YYSYMBOL_39_1 = 39,                      /* @1  */
+  YYSYMBOL_comparacion = 40,               /* comparacion  */
+  YYSYMBOL_paramComp = 41,                 /* paramComp  */
+  YYSYMBOL_operador = 42,                  /* operador  */
+  YYSYMBOL_switch = 43,                    /* switch  */
+  YYSYMBOL_44_2 = 44,                      /* @2  */
+  YYSYMBOL_listaCasosSwitch = 45,          /* listaCasosSwitch  */
+  YYSYMBOL_casoSwitch = 46,                /* casoSwitch  */
+  YYSYMBOL_47_3 = 47,                      /* @3  */
+  YYSYMBOL_show = 48,                      /* show  */
+  YYSYMBOL_varRecShow = 49,                /* varRecShow  */
+  YYSYMBOL_showLine = 50,                  /* showLine  */
+  YYSYMBOL_showName = 51,                  /* showName  */
+  YYSYMBOL_showTitle = 52,                 /* showTitle  */
+  YYSYMBOL_listparamName = 53,             /* listparamName  */
+  YYSYMBOL_paramName = 54,                 /* paramName  */
+  YYSYMBOL_paramShow = 55,                 /* paramShow  */
+  YYSYMBOL_decre = 56,                     /* decre  */
+  YYSYMBOL_incre = 57,                     /* incre  */
+  YYSYMBOL_varRec = 58,                    /* varRec  */
+  YYSYMBOL_59_4 = 59,                      /* @4  */
+  YYSYMBOL_iterat = 60,                    /* iterat  */
+  YYSYMBOL_for = 61,                       /* for  */
+  YYSYMBOL_62_5 = 62,                      /* @5  */
+  YYSYMBOL_condition = 63,                 /* condition  */
+  YYSYMBOL_expr = 64,                      /* expr  */
+  YYSYMBOL_term = 65,                      /* term  */
+  YYSYMBOL_factor = 66,                    /* factor  */
+  YYSYMBOL_67_6 = 67                       /* @6  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -474,20 +551,20 @@ union yyalloc
 #endif /* !YYCOPY_NEEDED */
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  8
+#define YYFINAL  56
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   12
+#define YYLAST   198
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  10
+#define YYNTOKENS  35
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  5
+#define YYNNTS  33
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  9
+#define YYNRULES  66
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  16
+#define YYNSTATES  121
 
-#define YYMAXUTOK   259
+#define YYMAXUTOK   277
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -504,12 +581,10 @@ static const yytype_int8 yytranslate[] =
        0,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       8,     9,     7,     5,     2,     6,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,    26,     2,    28,     2,     2,     2,     2,
+      30,    31,    34,    32,    29,    33,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,    27,     2,
+      24,    23,    25,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -526,14 +601,24 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3,     4
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+      15,    16,    17,    18,    19,    20,    21,    22
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    20,    20,    22,    23,    24,    26,    27,    29,    30
+       0,    27,    27,    27,    29,    29,    29,    29,    29,    29,
+      29,    29,    29,    29,    29,    29,    31,    31,    33,    35,
+      36,    37,    39,    39,    39,    39,    39,    39,    41,    41,
+      43,    43,    45,    45,    45,    47,    48,    48,    50,    52,
+      54,    56,    57,    59,    60,    61,    63,    64,    65,    66,
+      68,    70,    72,    72,    72,    74,    76,    76,    78,    80,
+      81,    82,    83,    84,    86,    86,    87
 };
 #endif
 
@@ -549,9 +634,17 @@ static const char *yysymbol_name (yysymbol_kind_t yysymbol) YY_ATTRIBUTE_UNUSED;
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "\"end of file\"", "error", "\"invalid token\"", "NUMBER", "ID", "'+'",
-  "'-'", "'*'", "'('", "')'", "$accept", "command", "expr", "term",
-  "factor", YY_NULLPTR
+  "\"end of file\"", "error", "\"invalid token\"", "NUMBER", "CARACTER",
+  "CADENA", "ID", "TIPO", "DECLARAR", "ESIGUAL", "CONDICIONAL", "PARA",
+  "BUCLE", "DECREMENTO", "INCREMENTO", "SWITCH", "CASOSWITCH",
+  "PORDEFECTO", "MIENTRAS", "MOSTRAR", "IMPLINEA", "IMPNOMBRE",
+  "IMPTITULO", "'='", "'<'", "'>'", "'!'", "':'", "'#'", "','", "'('",
+  "')'", "'+'", "'-'", "'*'", "$accept", "listainst", "instr",
+  "asignacion", "@1", "comparacion", "paramComp", "operador", "switch",
+  "@2", "listaCasosSwitch", "casoSwitch", "@3", "show", "varRecShow",
+  "showLine", "showName", "showTitle", "listparamName", "paramName",
+  "paramShow", "decre", "incre", "varRec", "@4", "iterat", "for", "@5",
+  "condition", "expr", "term", "factor", "@6", YY_NULLPTR
 };
 
 static const char *
@@ -566,26 +659,40 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_int16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,    43,    45,    42,    40,    41
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,    61,    60,    62,    33,    58,    35,    44,
+      40,    41,    43,    45,    42
 };
 #endif
 
-#define YYPACT_NINF (-5)
+#define YYPACT_NINF (-55)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
 
-#define YYTABLE_NINF (-1)
+#define YYTABLE_NINF (-55)
 
 #define yytable_value_is_error(Yyn) \
   0
 
   /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
      STATE-NUM.  */
-static const yytype_int8 yypact[] =
+static const yytype_int16 yypact[] =
 {
-      -3,    -5,    -3,     6,    -4,     3,    -5,    -2,    -5,    -3,
-      -3,    -3,    -5,     3,     3,    -5
+     155,   -55,   -55,    -8,   -20,    23,    26,    26,    30,    -1,
+      78,    37,    87,    87,     1,     3,   -55,   -55,   -55,    31,
+     -55,   -55,   -55,   -55,   -55,   -55,   -55,   -55,   -55,   -55,
+     -13,    15,   -55,   -55,    28,    44,   -55,    25,    32,    35,
+     -55,    44,   -55,   -55,   -55,   -55,    47,    65,   -55,   -55,
+     -55,   -55,    59,    68,    73,   149,   -55,   -55,   -55,    95,
+      98,   102,    44,     1,     1,     1,    44,   -55,    84,   117,
+     101,   -55,   -55,   109,   108,   -55,    78,   -55,    87,   -55,
+     -55,   -55,   -55,   -55,   -55,    15,    15,   -55,   -55,   115,
+     119,    26,    49,   138,   -55,   -55,   155,   155,   -55,   148,
+     130,    42,   -55,   133,    24,    58,   -55,   155,   -55,   -55,
+     155,   -55,   -55,   136,    92,   113,   155,   -55,   -55,   134,
+     -55
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -593,20 +700,37 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     8,     0,     0,     2,     5,     7,     0,     1,     0,
-       0,     0,     9,     3,     4,     6
+       0,    64,    21,    19,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     3,     4,     5,     0,
+      10,    12,    13,    14,    15,     8,     9,    11,     7,     6,
+      20,    61,    63,    65,     0,     0,    56,    52,     0,     0,
+      28,     0,    47,    49,    46,    48,     0,    37,    38,    44,
+      45,    43,     0,    42,     0,     0,     1,     2,    24,    22,
+      23,     0,     0,     0,     0,     0,     0,    19,     0,     0,
+       0,    50,    51,     0,     0,    35,     0,    39,     0,    40,
+      66,    25,    26,    27,    18,    59,    60,    62,    17,     0,
+       0,     0,     0,     0,    36,    41,     0,     0,    53,     0,
+       0,     0,    31,     0,     0,     0,    32,     0,    29,    30,
+       0,    58,    57,     0,     0,     0,     0,    34,    55,     0,
+      33
 };
 
   /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int8 yypgoto[] =
+static const yytype_int16 yypgoto[] =
 {
-      -5,    -5,     9,    -1,     1
+     -55,    82,   -15,   -55,   -55,   -30,   -54,   -55,   -55,   -55,
+     -55,    66,   -55,   -55,    96,   -55,   -55,   -55,   -11,   -55,
+     -55,   -55,   -55,    -6,   -55,   -55,   -55,   -55,   -55,   157,
+      45,   118,   -55
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     3,     4,     5,     6
+      -1,    15,    16,    17,    34,    18,    19,    62,    20,    73,
+     101,   102,   113,    21,    46,    22,    23,    24,    52,    53,
+      47,    25,    26,    38,    70,    27,    28,    69,    29,    30,
+      31,    32,    33
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -614,34 +738,93 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       1,     9,    10,     9,    10,     2,     8,    12,    13,    14,
-      11,     7,    15
+      57,    39,    54,    56,     1,    68,     1,     2,    84,     3,
+      35,    74,    88,     4,     5,   -16,     6,     7,     8,    63,
+      64,     9,    10,    11,    12,    13,    36,     1,     2,    41,
+       3,    14,    37,    14,     4,     5,    40,     6,     7,     8,
+      58,    48,     9,    10,    11,    12,    13,     1,     2,    65,
+      67,    66,   111,   -54,    14,    59,    60,    61,    99,   100,
+      71,     1,     2,    72,     3,    99,   100,    95,     4,     5,
+     108,     6,     7,     8,    14,    75,     9,    10,    11,    12,
+      13,    42,    43,    44,    45,    98,   112,    77,    14,    57,
+      57,    49,    50,    51,    76,     1,     2,    78,     3,    57,
+      57,    79,     4,     5,    57,     6,     7,     8,    85,    86,
+       9,    10,    11,    12,    13,    89,     1,     2,    81,     3,
+     117,    82,    14,     4,     5,    83,     6,     7,     8,    90,
+      91,     9,    10,    11,    12,    13,    92,     1,     2,    93,
+       3,   118,    96,    14,     4,     5,    97,     6,     7,     8,
+     103,   106,     9,    10,    11,    12,    13,   107,     1,     2,
+     110,     3,   120,   116,    14,     4,     5,   109,     6,     7,
+       8,    55,    94,     9,    10,    11,    12,    13,   104,   105,
+      80,    63,    64,    87,     0,    14,     0,     0,     0,   114,
+       0,     0,   115,     0,     0,     0,     0,     0,   119
 };
 
 static const yytype_int8 yycheck[] =
 {
-       3,     5,     6,     5,     6,     8,     0,     9,     9,    10,
-       7,     2,    11
+      15,     7,    13,     0,     3,    35,     3,     4,    62,     6,
+      30,    41,    66,    10,    11,    23,    13,    14,    15,    32,
+      33,    18,    19,    20,    21,    22,     3,     3,     4,    30,
+       6,    30,     6,    30,    10,    11,     6,    13,    14,    15,
+       9,     4,    18,    19,    20,    21,    22,     3,     4,    34,
+       6,    23,    28,    28,    30,    24,    25,    26,    16,    17,
+      28,     3,     4,    28,     6,    16,    17,    78,    10,    11,
+      28,    13,    14,    15,    30,    28,    18,    19,    20,    21,
+      22,     3,     4,     5,     6,    91,    28,    28,    30,   104,
+     105,     4,     5,     6,    29,     3,     4,    29,     6,   114,
+     115,    28,    10,    11,   119,    13,    14,    15,    63,    64,
+      18,    19,    20,    21,    22,    31,     3,     4,    23,     6,
+      28,    23,    30,    10,    11,    23,    13,    14,    15,    12,
+      29,    18,    19,    20,    21,    22,    27,     3,     4,    31,
+       6,    28,    27,    30,    10,    11,    27,    13,    14,    15,
+      12,     3,    18,    19,    20,    21,    22,    27,     3,     4,
+      27,     6,    28,    27,    30,    10,    11,   101,    13,    14,
+      15,    14,    76,    18,    19,    20,    21,    22,    96,    97,
+      31,    32,    33,    65,    -1,    30,    -1,    -1,    -1,   107,
+      -1,    -1,   110,    -1,    -1,    -1,    -1,    -1,   116
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     3,     8,    11,    12,    13,    14,    12,     0,     5,
-       6,     7,     9,    13,    13,    14
+       0,     3,     4,     6,    10,    11,    13,    14,    15,    18,
+      19,    20,    21,    22,    30,    36,    37,    38,    40,    41,
+      43,    48,    50,    51,    52,    56,    57,    60,    61,    63,
+      64,    65,    66,    67,    39,    30,     3,     6,    58,    58,
+       6,    30,     3,     4,     5,     6,    49,    55,     4,     4,
+       5,     6,    53,    54,    53,    64,     0,    37,     9,    24,
+      25,    26,    42,    32,    33,    34,    23,     6,    40,    62,
+      59,    28,    28,    44,    40,    28,    29,    28,    29,    28,
+      31,    23,    23,    23,    41,    65,    65,    66,    41,    31,
+      12,    29,    27,    31,    49,    53,    27,    27,    58,    16,
+      17,    45,    46,    12,    36,    36,     3,    27,    28,    46,
+      27,    28,    28,    47,    36,    36,    27,    28,    28,    36,
+      28
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    10,    11,    12,    12,    12,    13,    13,    14,    14
+       0,    35,    36,    36,    37,    37,    37,    37,    37,    37,
+      37,    37,    37,    37,    37,    37,    39,    38,    40,    41,
+      41,    41,    42,    42,    42,    42,    42,    42,    44,    43,
+      45,    45,    47,    46,    46,    48,    49,    49,    50,    51,
+      52,    53,    53,    54,    54,    54,    55,    55,    55,    55,
+      56,    57,    59,    58,    58,    60,    62,    61,    63,    64,
+      64,    64,    65,    65,    67,    66,    66
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     3,     3,     1,     3,     1,     1,     3
+       0,     2,     2,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     0,     4,     3,     1,
+       1,     1,     1,     1,     1,     2,     2,     2,     0,     6,
+       2,     1,     0,     6,     4,     3,     3,     1,     2,     3,
+       3,     3,     1,     1,     1,     1,     1,     1,     1,     1,
+       3,     3,     0,     4,     1,     8,     0,     7,     7,     3,
+       3,     1,     3,     1,     0,     2,     3
 };
 
 
@@ -1121,56 +1304,152 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-  case 2:
-#line 20 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-               {printf("El resultado %d\n",yyvsp[0]);}
-#line 1128 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+  case 16:
+#line 31 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                 {yyval=localizaSimbolo(lexema,ID);}
+#line 1311 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 3:
-#line 22 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
+  case 19:
+#line 35 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                 {yyval=localizaSimbolo(lexema,ID);}
+#line 1317 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 21:
+#line 37 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=localizaSimbolo(lexema,CARACTER);}
+#line 1323 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 28:
+#line 41 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=localizaSimbolo(lexema,ID);}
+#line 1329 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 32:
+#line 45 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                               {yyval=localizaSimbolo(lexema,NUMBER);}
+#line 1335 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 38:
+#line 50 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                              {yyval=localizaSimbolo(lexema,CARACTER);}
+#line 1341 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 43:
+#line 59 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                           {yyval=localizaSimbolo(lexema,ID);}
+#line 1347 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 44:
+#line 60 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                           {yyval=localizaSimbolo(lexema,CARACTER);}
+#line 1353 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 45:
+#line 61 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                           {yyval=localizaSimbolo(lexema,CADENA);}
+#line 1359 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 46:
+#line 63 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=localizaSimbolo(lexema,CADENA);}
+#line 1365 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 47:
+#line 64 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=localizaSimbolo(lexema,NUMBER);}
+#line 1371 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 48:
+#line 65 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=localizaSimbolo(lexema,ID);}
+#line 1377 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 49:
+#line 66 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=localizaSimbolo(lexema,CARACTER);}
+#line 1383 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 52:
+#line 72 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+              {yyval=localizaSimbolo(lexema,ID);}
+#line 1389 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 54:
+#line 72 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                                                               {yyval=localizaSimbolo(lexema,ID);}
+#line 1395 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 56:
+#line 76 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                       {yyval=localizaSimbolo(lexema,NUMBER);}
+#line 1401 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 59:
+#line 80 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
                         {yyval=yyvsp[-2]+yyvsp[0];}
-#line 1134 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+#line 1407 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 4:
-#line 23 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-                        {yyval=yyvsp[-2]-yyvsp[0];}
-#line 1140 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+  case 60:
+#line 81 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                         {yyval=yyvsp[-2]-yyvsp[0];}
+#line 1413 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 5:
-#line 24 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-                {yyval=yyvsp[0];}
-#line 1146 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+  case 61:
+#line 82 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                    {yyval=yyvsp[0];}
+#line 1419 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 6:
-#line 26 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-                          {yyval=yyvsp[-2]*yyvsp[0];}
-#line 1152 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+  case 62:
+#line 83 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                           {yyval=yyvsp[-2]*yyvsp[0];}
+#line 1425 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 7:
-#line 27 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
+  case 63:
+#line 84 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
                  {yyval=yyvsp[0];}
-#line 1158 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+#line 1431 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 8:
-#line 29 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-                 {yyval=yyvsp[0];}
-#line 1164 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+  case 64:
+#line 86 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                 {yyval=localizaSimbolo(lexema,NUMBER);}
+#line 1437 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
-  case 9:
-#line 30 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-                       {yyval=yyvsp[-1];}
-#line 1170 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+  case 65:
+#line 86 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                                                      {yyval=yyvsp[-1];}
+#line 1443 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
+    break;
+
+  case 66:
+#line 87 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
+                        {yyval=yyvsp[-1];}
+#line 1449 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
     break;
 
 
-#line 1174 "/home/cst/Code/github/pucp/INF265/c4/parser.c"
+#line 1453 "/home/cst/Code/github/pucp/INF265/lab2/parser.c"
 
       default: break;
     }
@@ -1364,11 +1643,48 @@ yyreturn:
   return yyresult;
 }
 
-#line 32 "/home/cst/Code/github/pucp/INF265/c4/calc.y"
-
+#line 89 "/home/cst/Code/github/pucp/INF265/lab2/lenguaje.y"
 
 void yyerror(char *s){
 	fprintf(stderr,"%s\n",s);
+}
+
+
+int localizaSimbolo(char *nom,int token){
+	int i;
+	for(i=0;i<nSim;i++){
+		if(!strcasecmp(tablaSimbolos[nSim].nombre,nom)){/*if(!strcmp(tablaSimbolos[nSim].nombre,nom);*/
+				return i;
+		}
+	}
+	strcpy(tablaSimbolos[nSim].nombre,nom);
+	tablaSimbolos[nSim].token=token;
+	if(token==NUMBER){
+		tablaSimbolos[nSim].valor=atof(lexema);
+	}
+    else if(token==CADENA){
+        tablaSimbolos[nSim].valor=strlen(lexema) - 2;   
+    }
+    else if(token==CARACTER){
+        tablaSimbolos[nSim].valor=strlen(lexema) - 2;  
+    }
+	else{
+		tablaSimbolos[nSim].valor=0.0;
+	}
+	nSim++;
+	return nSim-1;
+}
+
+void imprimeTablaSimbolos(){
+	int i;
+    printf("================================\n");
+	printf("Tabla de simbolos\n");
+    printf("================================\n");
+    printf("Pos  Nombre      Token   Valor\n");
+    printf("--------------------------------\n");
+	for(i=0;i<nSim;i++)
+		printf("%2d.  %-7s %9d %8.4lf\n",i,tablaSimbolos[i].nombre,tablaSimbolos[i].token,tablaSimbolos[i].valor);		
+    printf("================================\n");
 }
 
 int yylex(){
@@ -1382,26 +1698,69 @@ int yylex(){
 		}while(isalnum(c));
 		ungetc(c,stdin);
 		lexema[i++]='\0';
+		if(!strcmp(lexema,"number")||!strcmp(lexema,"char")||!strcmp(lexema,"str")||!strcmp(lexema,"file")||!strcmp(lexema,"date")||!strcmp(lexema,"table")) return TIPO; 
+        if(!strcmp(lexema,"as"))       return DECLARAR;
+        if(!strcmp(lexema,"equals"))   return ESIGUAL;
+        if(!strcmp(lexema,"condition"))return CONDICIONAL;
+        if(!strcmp(lexema,"For"))      return PARA;
+        if(!strcmp(lexema,"Loop"))     return BUCLE;
+        if(!strcmp(lexema,"Dec"))      return DECREMENTO;
+        if(!strcmp(lexema,"Inc"))      return INCREMENTO;
+        if(!strcmp(lexema,"Select"))   return SWITCH;
+        if(!strcmp(lexema,"Case"))     return CASOSWITCH;
+        if(!strcmp(lexema,"Default"))  return PORDEFECTO;
+        if(!strcmp(lexema,"While"))    return MIENTRAS;
+        if(!strcmp(lexema,"show"))     return MOSTRAR;
+        if(!strcmp(lexema,"showline")) return IMPLINEA;
+        if(!strcmp(lexema,"showname")) return IMPNOMBRE;
+        if(!strcmp(lexema,"showtitle"))return IMPTITULO;
 		return ID;
 
 	}
-	if(isdigit(c)){
+	if(isdigit(c)){ 
+		//scanf("%d",&yylval);
+		i=0;
+		do{
+			lexema[i++]=c;
+			c=getchar();
+		}while(isdigit(c));
 		ungetc(c,stdin);
-		scanf("%d",&yylval);
+		lexema[i++]='\0';
 		return NUMBER;
 	}
-	if(c=='\n'){
-		return 0;
-	}
+
+    if(c=='\''){
+        i=0;
+        do{
+			lexema[i++]=c;
+			c=getchar();
+		}while(c!='\'');
+        lexema[i++]='\'';
+        lexema[i++]=0;
+        return CARACTER;
+    }
+    
+    if(c == 34){
+        i=0;
+        do{
+			lexema[i++]=c;
+			c=getchar();
+		}while(c!=34);
+        lexema[i++]=34;
+        lexema[i++]=0;
+        return CADENA;
+    }    
+    
+    if(c=='\n')return 0;	
 	return c;
 }
 
 int main(){
-    while (!yyparse()) { 
+	if(!yyparse()){
 		printf("cadena válida\n");
-    }
-
-	printf("cadena inválida");
-
-    return 0;
+		imprimeTablaSimbolos();
+	}
+	else{
+		printf("cadena inválida\n");	
+	}
 }

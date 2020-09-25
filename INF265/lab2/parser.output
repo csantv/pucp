@@ -1,0 +1,1626 @@
+Terminals unused in grammar
+
+    TIPO
+    DECLARAR
+
+
+Grammar
+
+    0 $accept: listainst $end
+
+    1 listainst: listainst instr
+    2          | instr
+
+    3 instr: asignacion
+    4      | comparacion
+    5      | condition
+    6      | for
+    7      | decre
+    8      | incre
+    9      | switch
+   10      | iterat
+   11      | show
+   12      | showLine
+   13      | showName
+   14      | showTitle
+
+   15 @1: %empty
+
+   16 asignacion: ID @1 '=' paramComp
+
+   17 comparacion: paramComp operador paramComp
+
+   18 paramComp: ID
+   19          | expr
+   20          | CARACTER
+
+   21 operador: '<'
+   22         | '>'
+   23         | ESIGUAL
+   24         | '<' '='
+   25         | '>' '='
+   26         | '!' '='
+
+   27 @2: %empty
+
+   28 switch: SWITCH ID @2 ':' listaCasosSwitch '#'
+
+   29 listaCasosSwitch: listaCasosSwitch casoSwitch
+   30                 | casoSwitch
+
+   31 @3: %empty
+
+   32 casoSwitch: CASOSWITCH NUMBER @3 ':' listainst '#'
+   33           | PORDEFECTO ':' listainst '#'
+
+   34 show: MOSTRAR varRecShow '#'
+
+   35 varRecShow: paramShow ',' varRecShow
+   36           | paramShow
+
+   37 showLine: IMPLINEA CARACTER
+
+   38 showName: IMPNOMBRE listparamName '#'
+
+   39 showTitle: IMPTITULO listparamName '#'
+
+   40 listparamName: paramName ',' listparamName
+   41              | paramName
+
+   42 paramName: ID
+   43          | CARACTER
+   44          | CADENA
+
+   45 paramShow: CADENA
+   46          | NUMBER
+   47          | ID
+   48          | CARACTER
+
+   49 decre: DECREMENTO varRec '#'
+
+   50 incre: INCREMENTO varRec '#'
+
+   51 @4: %empty
+
+   52 varRec: ID @4 ',' varRec
+   53       | ID
+
+   54 iterat: MIENTRAS '(' comparacion ')' BUCLE ':' listainst '#'
+
+   55 @5: %empty
+
+   56 for: PARA NUMBER @5 BUCLE ':' listainst '#'
+
+   57 condition: CONDICIONAL '(' comparacion ')' ':' listainst '#'
+
+   58 expr: expr '+' term
+   59     | expr '-' term
+   60     | term
+
+   61 term: term '*' factor
+   62     | factor
+
+   63 @6: %empty
+
+   64 factor: NUMBER @6
+   65       | '(' expr ')'
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '!' (33) 26
+    '#' (35) 28 32 33 34 38 39 49 50 54 56 57
+    '(' (40) 54 57 65
+    ')' (41) 54 57 65
+    '*' (42) 61
+    '+' (43) 58
+    ',' (44) 35 40 52
+    '-' (45) 59
+    ':' (58) 28 32 33 54 56 57
+    '<' (60) 21 24
+    '=' (61) 16 24 25 26
+    '>' (62) 22 25
+    error (256)
+    NUMBER (258) 32 46 56 64
+    CARACTER (259) 20 37 43 48
+    CADENA (260) 44 45
+    ID (261) 16 18 28 42 47 52 53
+    TIPO (262)
+    DECLARAR (263)
+    ESIGUAL (264) 23
+    CONDICIONAL (265) 57
+    PARA (266) 56
+    BUCLE (267) 54 56
+    DECREMENTO (268) 49
+    INCREMENTO (269) 50
+    SWITCH (270) 28
+    CASOSWITCH (271) 32
+    PORDEFECTO (272) 33
+    MIENTRAS (273) 54
+    MOSTRAR (274) 34
+    IMPLINEA (275) 37
+    IMPNOMBRE (276) 38
+    IMPTITULO (277) 39
+
+
+Nonterminals, with rules where they appear
+
+    $accept (35)
+        on left: 0
+    listainst (36)
+        on left: 1 2
+        on right: 0 1 32 33 54 56 57
+    instr (37)
+        on left: 3 4 5 6 7 8 9 10 11 12 13 14
+        on right: 1 2
+    asignacion (38)
+        on left: 16
+        on right: 3
+    @1 (39)
+        on left: 15
+        on right: 16
+    comparacion (40)
+        on left: 17
+        on right: 4 54 57
+    paramComp (41)
+        on left: 18 19 20
+        on right: 16 17
+    operador (42)
+        on left: 21 22 23 24 25 26
+        on right: 17
+    switch (43)
+        on left: 28
+        on right: 9
+    @2 (44)
+        on left: 27
+        on right: 28
+    listaCasosSwitch (45)
+        on left: 29 30
+        on right: 28 29
+    casoSwitch (46)
+        on left: 32 33
+        on right: 29 30
+    @3 (47)
+        on left: 31
+        on right: 32
+    show (48)
+        on left: 34
+        on right: 11
+    varRecShow (49)
+        on left: 35 36
+        on right: 34 35
+    showLine (50)
+        on left: 37
+        on right: 12
+    showName (51)
+        on left: 38
+        on right: 13
+    showTitle (52)
+        on left: 39
+        on right: 14
+    listparamName (53)
+        on left: 40 41
+        on right: 38 39 40
+    paramName (54)
+        on left: 42 43 44
+        on right: 40 41
+    paramShow (55)
+        on left: 45 46 47 48
+        on right: 35 36
+    decre (56)
+        on left: 49
+        on right: 7
+    incre (57)
+        on left: 50
+        on right: 8
+    varRec (58)
+        on left: 52 53
+        on right: 49 50 52
+    @4 (59)
+        on left: 51
+        on right: 52
+    iterat (60)
+        on left: 54
+        on right: 10
+    for (61)
+        on left: 56
+        on right: 6
+    @5 (62)
+        on left: 55
+        on right: 56
+    condition (63)
+        on left: 57
+        on right: 5
+    expr (64)
+        on left: 58 59 60
+        on right: 19 58 59 65
+    term (65)
+        on left: 61 62
+        on right: 58 59 60 61
+    factor (66)
+        on left: 64 65
+        on right: 61 62
+    @6 (67)
+        on left: 63
+        on right: 64
+
+
+State 0
+
+    0 $accept: . listainst $end
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    listainst    go to state 15
+    instr        go to state 16
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 1
+
+   64 factor: NUMBER . @6
+
+    $default  reduce using rule 63 (@6)
+
+    @6  go to state 33
+
+
+State 2
+
+   20 paramComp: CARACTER .
+
+    $default  reduce using rule 20 (paramComp)
+
+
+State 3
+
+   16 asignacion: ID . @1 '=' paramComp
+   18 paramComp: ID .
+
+    '='       reduce using rule 15 (@1)
+    $default  reduce using rule 18 (paramComp)
+
+    @1  go to state 34
+
+
+State 4
+
+   57 condition: CONDICIONAL . '(' comparacion ')' ':' listainst '#'
+
+    '('  shift, and go to state 35
+
+
+State 5
+
+   56 for: PARA . NUMBER @5 BUCLE ':' listainst '#'
+
+    NUMBER  shift, and go to state 36
+
+
+State 6
+
+   49 decre: DECREMENTO . varRec '#'
+
+    ID  shift, and go to state 37
+
+    varRec  go to state 38
+
+
+State 7
+
+   50 incre: INCREMENTO . varRec '#'
+
+    ID  shift, and go to state 37
+
+    varRec  go to state 39
+
+
+State 8
+
+   28 switch: SWITCH . ID @2 ':' listaCasosSwitch '#'
+
+    ID  shift, and go to state 40
+
+
+State 9
+
+   54 iterat: MIENTRAS . '(' comparacion ')' BUCLE ':' listainst '#'
+
+    '('  shift, and go to state 41
+
+
+State 10
+
+   34 show: MOSTRAR . varRecShow '#'
+
+    NUMBER    shift, and go to state 42
+    CARACTER  shift, and go to state 43
+    CADENA    shift, and go to state 44
+    ID        shift, and go to state 45
+
+    varRecShow  go to state 46
+    paramShow   go to state 47
+
+
+State 11
+
+   37 showLine: IMPLINEA . CARACTER
+
+    CARACTER  shift, and go to state 48
+
+
+State 12
+
+   38 showName: IMPNOMBRE . listparamName '#'
+
+    CARACTER  shift, and go to state 49
+    CADENA    shift, and go to state 50
+    ID        shift, and go to state 51
+
+    listparamName  go to state 52
+    paramName      go to state 53
+
+
+State 13
+
+   39 showTitle: IMPTITULO . listparamName '#'
+
+    CARACTER  shift, and go to state 49
+    CADENA    shift, and go to state 50
+    ID        shift, and go to state 51
+
+    listparamName  go to state 54
+    paramName      go to state 53
+
+
+State 14
+
+   65 factor: '(' . expr ')'
+
+    NUMBER  shift, and go to state 1
+    '('     shift, and go to state 14
+
+    expr    go to state 55
+    term    go to state 31
+    factor  go to state 32
+
+
+State 15
+
+    0 $accept: listainst . $end
+    1 listainst: listainst . instr
+
+    $end         shift, and go to state 56
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    instr        go to state 57
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 16
+
+    2 listainst: instr .
+
+    $default  reduce using rule 2 (listainst)
+
+
+State 17
+
+    3 instr: asignacion .
+
+    $default  reduce using rule 3 (instr)
+
+
+State 18
+
+    4 instr: comparacion .
+
+    $default  reduce using rule 4 (instr)
+
+
+State 19
+
+   17 comparacion: paramComp . operador paramComp
+
+    ESIGUAL  shift, and go to state 58
+    '<'      shift, and go to state 59
+    '>'      shift, and go to state 60
+    '!'      shift, and go to state 61
+
+    operador  go to state 62
+
+
+State 20
+
+    9 instr: switch .
+
+    $default  reduce using rule 9 (instr)
+
+
+State 21
+
+   11 instr: show .
+
+    $default  reduce using rule 11 (instr)
+
+
+State 22
+
+   12 instr: showLine .
+
+    $default  reduce using rule 12 (instr)
+
+
+State 23
+
+   13 instr: showName .
+
+    $default  reduce using rule 13 (instr)
+
+
+State 24
+
+   14 instr: showTitle .
+
+    $default  reduce using rule 14 (instr)
+
+
+State 25
+
+    7 instr: decre .
+
+    $default  reduce using rule 7 (instr)
+
+
+State 26
+
+    8 instr: incre .
+
+    $default  reduce using rule 8 (instr)
+
+
+State 27
+
+   10 instr: iterat .
+
+    $default  reduce using rule 10 (instr)
+
+
+State 28
+
+    6 instr: for .
+
+    $default  reduce using rule 6 (instr)
+
+
+State 29
+
+    5 instr: condition .
+
+    $default  reduce using rule 5 (instr)
+
+
+State 30
+
+   19 paramComp: expr .
+   58 expr: expr . '+' term
+   59     | expr . '-' term
+
+    '+'  shift, and go to state 63
+    '-'  shift, and go to state 64
+
+    $default  reduce using rule 19 (paramComp)
+
+
+State 31
+
+   60 expr: term .
+   61 term: term . '*' factor
+
+    '*'  shift, and go to state 65
+
+    $default  reduce using rule 60 (expr)
+
+
+State 32
+
+   62 term: factor .
+
+    $default  reduce using rule 62 (term)
+
+
+State 33
+
+   64 factor: NUMBER @6 .
+
+    $default  reduce using rule 64 (factor)
+
+
+State 34
+
+   16 asignacion: ID @1 . '=' paramComp
+
+    '='  shift, and go to state 66
+
+
+State 35
+
+   57 condition: CONDICIONAL '(' . comparacion ')' ':' listainst '#'
+
+    NUMBER    shift, and go to state 1
+    CARACTER  shift, and go to state 2
+    ID        shift, and go to state 67
+    '('       shift, and go to state 14
+
+    comparacion  go to state 68
+    paramComp    go to state 19
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 36
+
+   56 for: PARA NUMBER . @5 BUCLE ':' listainst '#'
+
+    $default  reduce using rule 55 (@5)
+
+    @5  go to state 69
+
+
+State 37
+
+   52 varRec: ID . @4 ',' varRec
+   53       | ID .
+
+    '#'       reduce using rule 53 (varRec)
+    $default  reduce using rule 51 (@4)
+
+    @4  go to state 70
+
+
+State 38
+
+   49 decre: DECREMENTO varRec . '#'
+
+    '#'  shift, and go to state 71
+
+
+State 39
+
+   50 incre: INCREMENTO varRec . '#'
+
+    '#'  shift, and go to state 72
+
+
+State 40
+
+   28 switch: SWITCH ID . @2 ':' listaCasosSwitch '#'
+
+    $default  reduce using rule 27 (@2)
+
+    @2  go to state 73
+
+
+State 41
+
+   54 iterat: MIENTRAS '(' . comparacion ')' BUCLE ':' listainst '#'
+
+    NUMBER    shift, and go to state 1
+    CARACTER  shift, and go to state 2
+    ID        shift, and go to state 67
+    '('       shift, and go to state 14
+
+    comparacion  go to state 74
+    paramComp    go to state 19
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 42
+
+   46 paramShow: NUMBER .
+
+    $default  reduce using rule 46 (paramShow)
+
+
+State 43
+
+   48 paramShow: CARACTER .
+
+    $default  reduce using rule 48 (paramShow)
+
+
+State 44
+
+   45 paramShow: CADENA .
+
+    $default  reduce using rule 45 (paramShow)
+
+
+State 45
+
+   47 paramShow: ID .
+
+    $default  reduce using rule 47 (paramShow)
+
+
+State 46
+
+   34 show: MOSTRAR varRecShow . '#'
+
+    '#'  shift, and go to state 75
+
+
+State 47
+
+   35 varRecShow: paramShow . ',' varRecShow
+   36           | paramShow .
+
+    ','  shift, and go to state 76
+
+    $default  reduce using rule 36 (varRecShow)
+
+
+State 48
+
+   37 showLine: IMPLINEA CARACTER .
+
+    $default  reduce using rule 37 (showLine)
+
+
+State 49
+
+   43 paramName: CARACTER .
+
+    $default  reduce using rule 43 (paramName)
+
+
+State 50
+
+   44 paramName: CADENA .
+
+    $default  reduce using rule 44 (paramName)
+
+
+State 51
+
+   42 paramName: ID .
+
+    $default  reduce using rule 42 (paramName)
+
+
+State 52
+
+   38 showName: IMPNOMBRE listparamName . '#'
+
+    '#'  shift, and go to state 77
+
+
+State 53
+
+   40 listparamName: paramName . ',' listparamName
+   41              | paramName .
+
+    ','  shift, and go to state 78
+
+    $default  reduce using rule 41 (listparamName)
+
+
+State 54
+
+   39 showTitle: IMPTITULO listparamName . '#'
+
+    '#'  shift, and go to state 79
+
+
+State 55
+
+   58 expr: expr . '+' term
+   59     | expr . '-' term
+   65 factor: '(' expr . ')'
+
+    ')'  shift, and go to state 80
+    '+'  shift, and go to state 63
+    '-'  shift, and go to state 64
+
+
+State 56
+
+    0 $accept: listainst $end .
+
+    $default  accept
+
+
+State 57
+
+    1 listainst: listainst instr .
+
+    $default  reduce using rule 1 (listainst)
+
+
+State 58
+
+   23 operador: ESIGUAL .
+
+    $default  reduce using rule 23 (operador)
+
+
+State 59
+
+   21 operador: '<' .
+   24         | '<' . '='
+
+    '='  shift, and go to state 81
+
+    $default  reduce using rule 21 (operador)
+
+
+State 60
+
+   22 operador: '>' .
+   25         | '>' . '='
+
+    '='  shift, and go to state 82
+
+    $default  reduce using rule 22 (operador)
+
+
+State 61
+
+   26 operador: '!' . '='
+
+    '='  shift, and go to state 83
+
+
+State 62
+
+   17 comparacion: paramComp operador . paramComp
+
+    NUMBER    shift, and go to state 1
+    CARACTER  shift, and go to state 2
+    ID        shift, and go to state 67
+    '('       shift, and go to state 14
+
+    paramComp  go to state 84
+    expr       go to state 30
+    term       go to state 31
+    factor     go to state 32
+
+
+State 63
+
+   58 expr: expr '+' . term
+
+    NUMBER  shift, and go to state 1
+    '('     shift, and go to state 14
+
+    term    go to state 85
+    factor  go to state 32
+
+
+State 64
+
+   59 expr: expr '-' . term
+
+    NUMBER  shift, and go to state 1
+    '('     shift, and go to state 14
+
+    term    go to state 86
+    factor  go to state 32
+
+
+State 65
+
+   61 term: term '*' . factor
+
+    NUMBER  shift, and go to state 1
+    '('     shift, and go to state 14
+
+    factor  go to state 87
+
+
+State 66
+
+   16 asignacion: ID @1 '=' . paramComp
+
+    NUMBER    shift, and go to state 1
+    CARACTER  shift, and go to state 2
+    ID        shift, and go to state 67
+    '('       shift, and go to state 14
+
+    paramComp  go to state 88
+    expr       go to state 30
+    term       go to state 31
+    factor     go to state 32
+
+
+State 67
+
+   18 paramComp: ID .
+
+    $default  reduce using rule 18 (paramComp)
+
+
+State 68
+
+   57 condition: CONDICIONAL '(' comparacion . ')' ':' listainst '#'
+
+    ')'  shift, and go to state 89
+
+
+State 69
+
+   56 for: PARA NUMBER @5 . BUCLE ':' listainst '#'
+
+    BUCLE  shift, and go to state 90
+
+
+State 70
+
+   52 varRec: ID @4 . ',' varRec
+
+    ','  shift, and go to state 91
+
+
+State 71
+
+   49 decre: DECREMENTO varRec '#' .
+
+    $default  reduce using rule 49 (decre)
+
+
+State 72
+
+   50 incre: INCREMENTO varRec '#' .
+
+    $default  reduce using rule 50 (incre)
+
+
+State 73
+
+   28 switch: SWITCH ID @2 . ':' listaCasosSwitch '#'
+
+    ':'  shift, and go to state 92
+
+
+State 74
+
+   54 iterat: MIENTRAS '(' comparacion . ')' BUCLE ':' listainst '#'
+
+    ')'  shift, and go to state 93
+
+
+State 75
+
+   34 show: MOSTRAR varRecShow '#' .
+
+    $default  reduce using rule 34 (show)
+
+
+State 76
+
+   35 varRecShow: paramShow ',' . varRecShow
+
+    NUMBER    shift, and go to state 42
+    CARACTER  shift, and go to state 43
+    CADENA    shift, and go to state 44
+    ID        shift, and go to state 45
+
+    varRecShow  go to state 94
+    paramShow   go to state 47
+
+
+State 77
+
+   38 showName: IMPNOMBRE listparamName '#' .
+
+    $default  reduce using rule 38 (showName)
+
+
+State 78
+
+   40 listparamName: paramName ',' . listparamName
+
+    CARACTER  shift, and go to state 49
+    CADENA    shift, and go to state 50
+    ID        shift, and go to state 51
+
+    listparamName  go to state 95
+    paramName      go to state 53
+
+
+State 79
+
+   39 showTitle: IMPTITULO listparamName '#' .
+
+    $default  reduce using rule 39 (showTitle)
+
+
+State 80
+
+   65 factor: '(' expr ')' .
+
+    $default  reduce using rule 65 (factor)
+
+
+State 81
+
+   24 operador: '<' '=' .
+
+    $default  reduce using rule 24 (operador)
+
+
+State 82
+
+   25 operador: '>' '=' .
+
+    $default  reduce using rule 25 (operador)
+
+
+State 83
+
+   26 operador: '!' '=' .
+
+    $default  reduce using rule 26 (operador)
+
+
+State 84
+
+   17 comparacion: paramComp operador paramComp .
+
+    $default  reduce using rule 17 (comparacion)
+
+
+State 85
+
+   58 expr: expr '+' term .
+   61 term: term . '*' factor
+
+    '*'  shift, and go to state 65
+
+    $default  reduce using rule 58 (expr)
+
+
+State 86
+
+   59 expr: expr '-' term .
+   61 term: term . '*' factor
+
+    '*'  shift, and go to state 65
+
+    $default  reduce using rule 59 (expr)
+
+
+State 87
+
+   61 term: term '*' factor .
+
+    $default  reduce using rule 61 (term)
+
+
+State 88
+
+   16 asignacion: ID @1 '=' paramComp .
+
+    $default  reduce using rule 16 (asignacion)
+
+
+State 89
+
+   57 condition: CONDICIONAL '(' comparacion ')' . ':' listainst '#'
+
+    ':'  shift, and go to state 96
+
+
+State 90
+
+   56 for: PARA NUMBER @5 BUCLE . ':' listainst '#'
+
+    ':'  shift, and go to state 97
+
+
+State 91
+
+   52 varRec: ID @4 ',' . varRec
+
+    ID  shift, and go to state 37
+
+    varRec  go to state 98
+
+
+State 92
+
+   28 switch: SWITCH ID @2 ':' . listaCasosSwitch '#'
+
+    CASOSWITCH  shift, and go to state 99
+    PORDEFECTO  shift, and go to state 100
+
+    listaCasosSwitch  go to state 101
+    casoSwitch        go to state 102
+
+
+State 93
+
+   54 iterat: MIENTRAS '(' comparacion ')' . BUCLE ':' listainst '#'
+
+    BUCLE  shift, and go to state 103
+
+
+State 94
+
+   35 varRecShow: paramShow ',' varRecShow .
+
+    $default  reduce using rule 35 (varRecShow)
+
+
+State 95
+
+   40 listparamName: paramName ',' listparamName .
+
+    $default  reduce using rule 40 (listparamName)
+
+
+State 96
+
+   57 condition: CONDICIONAL '(' comparacion ')' ':' . listainst '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    listainst    go to state 104
+    instr        go to state 16
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 97
+
+   56 for: PARA NUMBER @5 BUCLE ':' . listainst '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    listainst    go to state 105
+    instr        go to state 16
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 98
+
+   52 varRec: ID @4 ',' varRec .
+
+    $default  reduce using rule 52 (varRec)
+
+
+State 99
+
+   32 casoSwitch: CASOSWITCH . NUMBER @3 ':' listainst '#'
+
+    NUMBER  shift, and go to state 106
+
+
+State 100
+
+   33 casoSwitch: PORDEFECTO . ':' listainst '#'
+
+    ':'  shift, and go to state 107
+
+
+State 101
+
+   28 switch: SWITCH ID @2 ':' listaCasosSwitch . '#'
+   29 listaCasosSwitch: listaCasosSwitch . casoSwitch
+
+    CASOSWITCH  shift, and go to state 99
+    PORDEFECTO  shift, and go to state 100
+    '#'         shift, and go to state 108
+
+    casoSwitch  go to state 109
+
+
+State 102
+
+   30 listaCasosSwitch: casoSwitch .
+
+    $default  reduce using rule 30 (listaCasosSwitch)
+
+
+State 103
+
+   54 iterat: MIENTRAS '(' comparacion ')' BUCLE . ':' listainst '#'
+
+    ':'  shift, and go to state 110
+
+
+State 104
+
+    1 listainst: listainst . instr
+   57 condition: CONDICIONAL '(' comparacion ')' ':' listainst . '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '#'          shift, and go to state 111
+    '('          shift, and go to state 14
+
+    instr        go to state 57
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 105
+
+    1 listainst: listainst . instr
+   56 for: PARA NUMBER @5 BUCLE ':' listainst . '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '#'          shift, and go to state 112
+    '('          shift, and go to state 14
+
+    instr        go to state 57
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 106
+
+   32 casoSwitch: CASOSWITCH NUMBER . @3 ':' listainst '#'
+
+    $default  reduce using rule 31 (@3)
+
+    @3  go to state 113
+
+
+State 107
+
+   33 casoSwitch: PORDEFECTO ':' . listainst '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    listainst    go to state 114
+    instr        go to state 16
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 108
+
+   28 switch: SWITCH ID @2 ':' listaCasosSwitch '#' .
+
+    $default  reduce using rule 28 (switch)
+
+
+State 109
+
+   29 listaCasosSwitch: listaCasosSwitch casoSwitch .
+
+    $default  reduce using rule 29 (listaCasosSwitch)
+
+
+State 110
+
+   54 iterat: MIENTRAS '(' comparacion ')' BUCLE ':' . listainst '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    listainst    go to state 115
+    instr        go to state 16
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 111
+
+   57 condition: CONDICIONAL '(' comparacion ')' ':' listainst '#' .
+
+    $default  reduce using rule 57 (condition)
+
+
+State 112
+
+   56 for: PARA NUMBER @5 BUCLE ':' listainst '#' .
+
+    $default  reduce using rule 56 (for)
+
+
+State 113
+
+   32 casoSwitch: CASOSWITCH NUMBER @3 . ':' listainst '#'
+
+    ':'  shift, and go to state 116
+
+
+State 114
+
+    1 listainst: listainst . instr
+   33 casoSwitch: PORDEFECTO ':' listainst . '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '#'          shift, and go to state 117
+    '('          shift, and go to state 14
+
+    instr        go to state 57
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 115
+
+    1 listainst: listainst . instr
+   54 iterat: MIENTRAS '(' comparacion ')' BUCLE ':' listainst . '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '#'          shift, and go to state 118
+    '('          shift, and go to state 14
+
+    instr        go to state 57
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 116
+
+   32 casoSwitch: CASOSWITCH NUMBER @3 ':' . listainst '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '('          shift, and go to state 14
+
+    listainst    go to state 119
+    instr        go to state 16
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 117
+
+   33 casoSwitch: PORDEFECTO ':' listainst '#' .
+
+    $default  reduce using rule 33 (casoSwitch)
+
+
+State 118
+
+   54 iterat: MIENTRAS '(' comparacion ')' BUCLE ':' listainst '#' .
+
+    $default  reduce using rule 54 (iterat)
+
+
+State 119
+
+    1 listainst: listainst . instr
+   32 casoSwitch: CASOSWITCH NUMBER @3 ':' listainst . '#'
+
+    NUMBER       shift, and go to state 1
+    CARACTER     shift, and go to state 2
+    ID           shift, and go to state 3
+    CONDICIONAL  shift, and go to state 4
+    PARA         shift, and go to state 5
+    DECREMENTO   shift, and go to state 6
+    INCREMENTO   shift, and go to state 7
+    SWITCH       shift, and go to state 8
+    MIENTRAS     shift, and go to state 9
+    MOSTRAR      shift, and go to state 10
+    IMPLINEA     shift, and go to state 11
+    IMPNOMBRE    shift, and go to state 12
+    IMPTITULO    shift, and go to state 13
+    '#'          shift, and go to state 120
+    '('          shift, and go to state 14
+
+    instr        go to state 57
+    asignacion   go to state 17
+    comparacion  go to state 18
+    paramComp    go to state 19
+    switch       go to state 20
+    show         go to state 21
+    showLine     go to state 22
+    showName     go to state 23
+    showTitle    go to state 24
+    decre        go to state 25
+    incre        go to state 26
+    iterat       go to state 27
+    for          go to state 28
+    condition    go to state 29
+    expr         go to state 30
+    term         go to state 31
+    factor       go to state 32
+
+
+State 120
+
+   32 casoSwitch: CASOSWITCH NUMBER @3 ':' listainst '#' .
+
+    $default  reduce using rule 32 (casoSwitch)
