@@ -130,8 +130,6 @@ int main()
     char tipo_mov, moneda_mov;
     double amount_mov;
 
-    
-
     cout.fill('=');
     cout << setw(MAX_SEP_CNT) << "" << endl;
     cout << "RESUMEN:" << endl;
