@@ -49,7 +49,8 @@ void actualizar_nc()
         int end_pos = archBin.tellg();  // fin del registro
         if (tipoDoc[0] == 'N') {
             monto = buscar_total_devolucion(mm, aa, referencia);
-            archBin.seekg(ini_pos + 5 * sizeof(int) + 13 * sizeof(char));   // avanzar hasta el monto
+            archBin.seekg(ini_pos);   // avanzar hasta el monto
+            archBin.seekg(5 * sizeof(int) + 13 * sizeof(char), ios::cur);
             archBin.write(reinterpret_cast<const char*>(&monto), sizeof(double));
             archBin.seekg(end_pos);
         }
