@@ -1,49 +1,42 @@
 cmake_minimum_required(VERSION 3.17)
 
-set(CMAKE_BUILD_TYPE "Debug")
-set(CMAKE_ASM_NASM_OBJECT_FORMAT elf32)
-set(CMAKE_ASM_NASM_FLAGS_DEBUG -g)
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_ASM_NASM_OBJECT_FORMAT elf64)
+set(CMAKE_ASM_NASM_FLAGS_DEBUG -gdwarf)
 
-project(OAC C ASM_NASM)
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
+set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
-set(MY_FLAGS -no-pie -m32)
+project(IEE240 C ASM_NASM)
+
+# not required for 64 bit
+#set(MY_FLAGS -m32 -no-pie)
 
 # use c linker
 set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_C_LINK_EXECUTABLE})
 
-set(my_base_dir "l1r/pregunta2/")
+# folder where all sources are
+set(BASE_DIR retos4/)
 
 # nasm sources
-set(asm_src
-    imneg.asm
-    #myLCM.asm
-    #imhist.asm
-    #myGCD.s
-    #fuerte2.s
-    #fuerte.s
-    #scanf.s
-    #hello.s
-    #asd1.s
+set(ASM_SRC
+    limite.asm
 )
-
-list(TRANSFORM asm_src PREPEND ${my_base_dir})
-
-set_source_files_properties(${asm_src} PROPERTIES LANGUAGE ASM_NASM)
-add_library(asm_funcs ${asm_src})
-set_target_properties(asm_funcs PROPERTIES LINK_OPTIONS "${MY_FLAGS}")
 
 # c sources
-set(c_src
-    readimglib.h
-    testImneg.c
-    #testImhist.c
-    #fuerte2.c
+set(C_SRC
+    limite.c
 )
-list(TRANSFORM c_src PREPEND ${my_base_dir})
+
+list(TRANSFORM ASM_SRC PREPEND ${BASE_DIR})
+list(TRANSFORM C_SRC PREPEND ${BASE_DIR})
+
+set_source_files_properties(${ASM_SRC} PROPERTIES LANGUAGE ASM_NASM)
+add_library(asm_funcs ${ASM_SRC})
+set_target_properties(asm_funcs PROPERTIES LINK_OPTIONS "${MY_FLAGS}")
 
 # always add dummy file
 file(WRITE null.c "")
-add_executable(oac ${c_src} null.c)
-
-set_target_properties(oac PROPERTIES COMPILE_OPTIONS "${MY_FLAGS}" LINK_OPTIONS "${MY_FLAGS}")
-target_link_libraries(oac asm_funcs)
+add_executable(prog ${C_SRC} null.c)
+set_target_properties(prog PROPERTIES COMPILE_OPTIONS "${MY_FLAGS}" LINK_OPTIONS "${MY_FLAGS}")
+target_link_libraries(prog asm_funcs m)

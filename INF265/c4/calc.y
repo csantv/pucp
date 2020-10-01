@@ -47,7 +47,6 @@ int yylex(){
 		ungetc(c,stdin);
 		lexema[i++]='\0';
 		return ID;
-
 	}
 	if(isdigit(c)){
 		ungetc(c,stdin);

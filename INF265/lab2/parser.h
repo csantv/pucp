@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_C4_PARSER_H_INCLUDED
-# define YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_C4_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_LAB2_PARSER_H_INCLUDED
+# define YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_LAB2_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -55,7 +55,25 @@ extern int yydebug;
     YYerror = 256,                 /* error  */
     YYUNDEF = 257,                 /* "invalid token"  */
     NUMBER = 258,                  /* NUMBER  */
-    ID = 259                       /* ID  */
+    CARACTER = 259,                /* CARACTER  */
+    CADENA = 260,                  /* CADENA  */
+    ID = 261,                      /* ID  */
+    TIPO = 262,                    /* TIPO  */
+    DECLARAR = 263,                /* DECLARAR  */
+    ESIGUAL = 264,                 /* ESIGUAL  */
+    CONDICIONAL = 265,             /* CONDICIONAL  */
+    PARA = 266,                    /* PARA  */
+    BUCLE = 267,                   /* BUCLE  */
+    DECREMENTO = 268,              /* DECREMENTO  */
+    INCREMENTO = 269,              /* INCREMENTO  */
+    SWITCH = 270,                  /* SWITCH  */
+    CASOSWITCH = 271,              /* CASOSWITCH  */
+    PORDEFECTO = 272,              /* PORDEFECTO  */
+    MIENTRAS = 273,                /* MIENTRAS  */
+    MOSTRAR = 274,                 /* MOSTRAR  */
+    IMPLINEA = 275,                /* IMPLINEA  */
+    IMPNOMBRE = 276,               /* IMPNOMBRE  */
+    IMPTITULO = 277                /* IMPTITULO  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -72,4 +90,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_C4_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_CST_CODE_GITHUB_PUCP_INF265_LAB2_PARSER_H_INCLUDED  */
