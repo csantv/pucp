@@ -19,4 +19,4 @@ project(INF281 CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(INF281 2019-2/lab3/main.cpp 2019-2/lab3/funciones.cpp 2019-2/lab3/funciones.h)
+add_executable(INF281 2020-2/lab2/main.cpp 2020-2/lab2/func.cpp 2020-2/lab2/func.h 2020-2/lab2/func-aux.cpp 2020-2/lab2/func-aux.h)
