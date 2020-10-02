@@ -1,0 +1,6 @@
+EN4313   Zamora/Cabrera/Carmen   Endocrinologia   445.12
+1/01/2020     R    891472    Virginia/Chumpitaz    9.33
+2/01/2020     R    943118    Ronald/Gavidia    43.62
+5/01/2020     R    975942    Amaru/Suarez    93.91
+17/01/2020    A    906869    Rony/Segura    8.66
+31/01/2020    A    741156    Glenda/Pena    66.1
