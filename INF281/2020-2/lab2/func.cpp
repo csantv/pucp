@@ -161,43 +161,40 @@ void generar_reporte_notas()
     }
 }
 
-
-void completar_camp_num_alumnos()
+void add_alumno_info_nota(int cod, int yy_in, int fac, double nota, double cred)
 {
     fstream alumnBin = open_file("Alumnos.bin", ios::in | ios::out | ios::binary);
-    ifstream notasBin = iopen_file("NotasFinales.bin", ios::in | ios::binary);
-    int cod, yy_in, fac, cur_fac, nota, sem, yy; double cred;
-    char nom_cur[7];
     int codAl, yyAl, facAl; char name_alumn[50], name_fac[30];
     double total_cur, total_cred_apro, total_cred_des, sum_nota_aprob, sum_nota_des,
             prom_gen_cur, prom_gen_apro, relacion_aprob_cred;
     while (true) {
+        int ini = alumnBin.tellg(); // inicio del registro
+        read_alumn_bin(alumnBin, codAl, yyAl, facAl, name_alumn, name_fac, total_cur,total_cred_apro,
+               total_cred_des, sum_nota_aprob, sum_nota_des,prom_gen_cur, prom_gen_apro, relacion_aprob_cred);
+        if (alumnBin.eof()) break;
+        if (cod == codAl && yyAl == yy_in && fac == facAl) {
+            alumnBin.seekg(ini);
+            total_cur++;
+            if (nota < 11) {
+                total_cred_des += cred; sum_nota_des += nota;
+            } else {
+                total_cred_apro += cred; sum_nota_aprob += nota;
+            }
+            insert_alumnos_bin(alumnBin, codAl, yyAl, facAl, name_alumn, name_fac, total_cur,total_cred_apro,
+                   total_cred_des, sum_nota_aprob, sum_nota_des, prom_gen_cur, prom_gen_apro, relacion_aprob_cred);
+            break;
+        }
+    }
+}
+
+void completar_camp_num_alumnos()
+{
+    ifstream notasBin = iopen_file("NotasFinales.bin", ios::in | ios::binary);
+    int cod, yy_in, fac, cur_fac, nota, sem, yy; double cred;
+    char nom_cur[7];
+    while (true) {
         read_notas_bin(notasBin, cod, yy_in, fac, nom_cur, cur_fac, nota, sem, yy, cred);
         if (notasBin.eof()) break;
-        // avanzar en el archivo hasta encontrarlo
-        while (true) {
-            int ini = alumnBin.tellg(); // inicio del registro
-            read_alumn_bin(alumnBin, codAl, yyAl, facAl, name_alumn, name_fac, total_cur,total_cred_apro,
-                           total_cred_des, sum_nota_aprob, sum_nota_des,
-                           prom_gen_cur, prom_gen_apro, relacion_aprob_cred);
-            if (alumnBin.eof()) break;
-            if (cod == codAl && yyAl == yy_in && fac == facAl) {
-                alumnBin.seekg(ini);
-                total_cur++;
-                if (nota < 11) {
-                    total_cred_des += cred;
-                    sum_nota_des += nota;
-                } else {
-                    total_cred_apro += cred;
-                    sum_nota_aprob += nota;
-                }
-                insert_alumnos_bin(alumnBin, codAl, yyAl, facAl, name_alumn, name_fac, total_cur,total_cred_apro,
-                                   total_cred_des, sum_nota_aprob, sum_nota_des,
-                                   prom_gen_cur, prom_gen_apro, relacion_aprob_cred);
-                break;
-            }
-        }
-        alumnBin.seekg(0);
+        add_alumno_info_nota(cod, yy_in, fac, nota, cred);
     }
-    generar_reporte_alumnos();
 }
