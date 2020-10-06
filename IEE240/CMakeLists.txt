@@ -10,22 +10,23 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 project(IEE240 C ASM_NASM)
 
 # not required for 64 bit
-#set(MY_FLAGS -m32 -no-pie)
+#set(MY_FLAGS -no-pie)
 
 # use c linker
 set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_C_LINK_EXECUTABLE})
 
 # folder where all sources are
-set(BASE_DIR retos4/)
+set(BASE_DIR "./lab2/pregunta2/")
 
 # nasm sources
 set(ASM_SRC
-    limite.asm
+    #hello64.s
+    geometricSerieASM.asm
 )
 
 # c sources
 set(C_SRC
-    limite.c
+    preg2.c
 )
 
 list(TRANSFORM ASM_SRC PREPEND ${BASE_DIR})
