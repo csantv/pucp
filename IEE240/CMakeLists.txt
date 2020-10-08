@@ -16,17 +16,19 @@ project(IEE240 C ASM_NASM)
 set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_C_LINK_EXECUTABLE})
 
 # folder where all sources are
-set(BASE_DIR "./lab2/pregunta2/")
+set(BASE_DIR "./pc3/")
 
 # nasm sources
 set(ASM_SRC
+    func.asm
     #hello64.s
-    geometricSerieASM.asm
+    #geometricSerieASM.asm
 )
 
 # c sources
 set(C_SRC
-    preg2.c
+    mv_mult.c
+    #preg2.c
 )
 
 list(TRANSFORM ASM_SRC PREPEND ${BASE_DIR})
