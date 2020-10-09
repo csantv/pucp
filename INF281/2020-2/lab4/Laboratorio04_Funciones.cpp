@@ -131,7 +131,7 @@ int buscarPac(char **& pacientes, char* nombre)
 
 void cargarPacientes(char* codMed, int *& codigoPac, char **& pacientes, double *& porcentajes, int*& veces)
 {
-    ifstream pacDat = iopen_file("PacientesAtencion.csv", ios::in);
+    ifstream pacDat = iopen_file("Pacientes-Atencion.csv", ios::in);
     int _i, codPac; char _c, estado, nombre[50], readMed[7]; double porcentaje; int numDat = 0;
     while (true) {
         if (pacDat.eof()) break;
@@ -139,7 +139,9 @@ void cargarPacientes(char* codMed, int *& codigoPac, char **& pacientes, double 
         while (true) {
             pacDat >> estado >> _c >> codPac >> _c;
             pacDat.getline(nombre, 50, ',');
-            pacDat >> porcentaje >> _c >> readMed >> _c;
+            pacDat >> porcentaje >> _c;
+            pacDat.getline(readMed, 7);
+            pacDat >> _c;
             if (_c == '\n') break;
             if (estado == 'A') {
                 int indice = buscarPac(pacientes, nombre);
