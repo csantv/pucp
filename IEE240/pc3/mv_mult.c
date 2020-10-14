@@ -4,6 +4,7 @@
 #include <time.h>
 
 extern void weight_sum(int N, float* M, float* x, float* b);
+extern void weight_sum2(int N, float* M, float* x, float* b);
 
 void ini_array(float *arr, int numel, float var, float media) {
 
@@ -42,7 +43,7 @@ void weight_vec(float *M, float *b, int numel) {
 }
 
 int main() {
-    int numel = 2048;
+    int numel = 1000;
     clock_t start_t, end_t, total_t, timec, timeasm;
 
 	// reserva de memoria
@@ -62,18 +63,18 @@ int main() {
     printf("Tiempo en ASM: %.0f us\n", 1e6 * (float)timeasm / CLOCKS_PER_SEC);
 
 	// medicion del tiempo empieza ahora
-    start_t = clock();
+    /*start_t = clock();
 	vec_sum(M, x, numel);
 	weight_vec(M, b, numel);
     end_t = clock();
-    timec = end_t - start_t;
+    timec = end_t - start_t;*/
 	// medicion del tiempo termina ahora
 
 	// imprimir tiempo aqui
-    printf("Tiempo en C: %.0f us\n", 1e6 * (float)timec / CLOCKS_PER_SEC);
+    //printf("Tiempo en C: %.0f us\n", 1e6 * (float)timec / CLOCKS_PER_SEC);
 
     // speedup
-    printf("Speedup: %.2f\n", (float)timec / (float)timeasm);
+    //printf("Speedup: %.2f\n", (float)timec / (float)timeasm);
 	return 0;
 
 }
