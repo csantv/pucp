@@ -33,75 +33,61 @@ int strcmp(const char* s1, const char* s2)
     return *(const unsigned char*)s1 - *(const unsigned char*)s2;
 }
 
-void append_tarifas(double *& tarifas, double tarifa, int numDat)
+void append_str(char **& arr, char* str)
 {
-    double* aux; int cap = numDat + INCREMENTOS;
-    aux = new double [cap];
-    for (int i = 0; i < numDat; ++i) {
-        aux[i] = tarifas[i];
-    }
-    aux[numDat] = tarifa;
-    aux[numDat + 1] = -1;
-    if (!tarifas) delete tarifas;
-    tarifas = aux;
-}
-
-void append_str(char **& arr, char* str, int numDat)
-{
-    char** aux; int cap = numDat + INCREMENTOS;
-    aux = new char* [cap];
-    for (int i = 0; i < numDat; ++i) {
+    if (!arr) arr = new char* {new char {EOF}};             // verificar si es nulo e iniciarlo
+    int numDat = 0; while (*arr[numDat] != EOF) numDat++;   // obtener numero de datos
+    char** aux = new char* [numDat + 2];                    // arreglo auxiliar
+    for (int i = 0; i < numDat; ++i) {                      // copiar datos
         aux[i] = new char [strlen(arr[i]) + 1];
         strcpy(aux[i], arr[i]);
         delete arr[i];
     }
-    aux[numDat] = new char [strlen(str) + 1];
+    aux[numDat] = new char [strlen(str) + 1];               // agregar nuevo valor
     strcpy(aux[numDat], str);
-    aux[numDat + 1] = new char;
-    *aux[numDat + 1] = EOF;
-    if (!arr) delete[] arr;
+    aux[numDat + 1] = new char {EOF};   // fin del arreglo es EOF
+    delete[] arr;   // eliminar arreglo anterior
+    arr = aux;      // asignar nuevo arreglo a arr
+}
+
+void append_int(int*& arr, int val)
+{
+    if (!arr) arr = new int {-1};
+    int numDat = 0; while (arr[numDat] != -1) numDat++;
+    int* aux = new int [numDat + 2];
+    for (int i = 0; i < numDat; ++i) aux[i] = arr[i];
+    aux[numDat] = val;
+    aux[numDat + 1] = -1;
+    delete[] arr;
     arr = aux;
 }
 
-void append_int(int *& arr, int val, int numDat)
+void append_double(double*& arr, double val)
 {
-    int* aux; int cap = numDat + INCREMENTOS;
-    aux = new int [cap];
-    for (int i = 0; i < numDat; ++i) {
-        aux[i] = arr[i];
-    }
+    if (!arr) arr = new double {-1};
+    int numDat = 0; while (arr[numDat] != -1) numDat++;
+    double* aux = new double [numDat + 2];
+    for (int i = 0; i < numDat; ++i) aux[i] = arr[i];
     aux[numDat] = val;
     aux[numDat + 1] = -1;
-    if (!arr) delete arr;
-    arr = aux;
-}
-
-void append_double(double *& arr, double val, int numDat)
-{
-    double* aux; int cap = numDat + INCREMENTOS;
-    aux = new double [cap];
-    for (int i = 0; i < numDat; ++i) {
-        aux[i] = arr[i];
-    }
-    aux[numDat] = val;
-    aux[numDat + 1] = -1;
-    if (!arr) delete arr;
+    delete[] arr;
     arr = aux;
 }
 
 void cargarMedicos(char**& codigoMed, char**& medicos, double*& tarifas)
 {
+    codigoMed = nullptr; medicos = nullptr; tarifas = nullptr;
     ifstream relMedicos = iopen_file("RelacionMedicos.csv", ios::in);
     char cod[7], str[50]; double tarifa; int numDat = 0;
     while (true) {
         if (relMedicos.eof()) break;
         relMedicos.getline(cod, 7, ',');
-        append_str(codigoMed, cod, numDat);
+        append_str(codigoMed, cod);
         relMedicos.getline(str, 50, ',');
-        append_str(medicos, str, numDat);
+        append_str(medicos, str);
         relMedicos.getline(str, 50, ',');
         relMedicos >> tarifa >> ws;
-        append_tarifas(tarifas, tarifa, numDat);
+        append_double(tarifas, tarifa);
         numDat++;
     }
 }
@@ -146,10 +132,10 @@ void cargarPacientes(char* codMed, int *& codigoPac, char **& pacientes, double 
             if (estado == 'A') {
                 int indice = buscarPac(pacientes, nombre);
                 if (indice < 0) {
-                    append_int(codigoPac, codPac, numDat);
-                    append_str(pacientes, nombre, numDat);
-                    append_double(porcentajes, porcentaje, numDat);
-                    append_int(veces, 1, numDat);
+                    append_int(codigoPac, codPac);
+                    append_str(pacientes, nombre);
+                    append_double(porcentajes, porcentaje);
+                    append_int(veces, 1);
                 } else {
                     veces[indice]++;
                 }

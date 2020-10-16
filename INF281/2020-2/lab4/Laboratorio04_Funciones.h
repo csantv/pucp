@@ -17,10 +17,10 @@ void reporteDelMedico(std::ofstream& reporte, char* codMed, char**& codigoMed, c
 void liberarEspacios(int *& codigoPac, char **& pacientes, double *& porcentajes, int*& veces);
 
 void append_tarifas(double *& tarifas, double tarifa, int numDat);
-void append_str(char **& arr, char* str, int numDat);
+void append_str(char **& arr, char* str);
 int buscarPac(char **& pacientes, char* nombre);
-void append_int(int *& arr, int val, int numDat);
-void append_double(double *& arr, double val, int numDat);
+void append_int(int *& arr, int val);
+void append_double(double *& arr, double val);
 int strlen(const char* arr);
 void strcpy(char* dest, const char* src);
 int strcmp(const char* s1, const char* s2);

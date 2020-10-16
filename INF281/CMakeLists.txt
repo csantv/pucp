@@ -20,6 +20,8 @@ project(INF281 CXX)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(INF281
-        2020-2/lab3/MedicosPacientes.cpp
-        2020-2/lab3/MedicosPacientes.h
-        2020-2/lab3/mainmed.cpp)
+        2019-2/lab5/main.cpp
+        2019-2/lab5/Funcioneslaboratorio05.cpp
+        2019-2/lab5/Funcioneslaboratorio05.h
+        2019-2/lab5/func-aux.cpp
+        2019-2/lab5/func-aux.h)
