@@ -12,8 +12,8 @@ void leerUsuarios(void *&usuarios)
     usuarios = nullptr;
     ifstream usr = iopen_file("Usuarios.csv", ios::in);
     while (true) {
-        if (usr.eof()) break;
         usr >> codigo >> _;
+        if (usr.eof()) break;
         usr.getline(nombre, 50);
         insert_usuario(usuarios, codigo, nombre);
     }
