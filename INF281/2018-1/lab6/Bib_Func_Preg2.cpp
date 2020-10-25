@@ -17,8 +17,7 @@ void leerPrestamos(void *&usuarios)
         prest >> codigo >> _;
         if (prest.eof() || prest.fail()) break;
         prest.getline(codLibro, 8, ',');
-        prest.getline(fecha, 12, '\r');
-        prest >> ws;
+        prest.getline(fecha, 12);
         insertar_prestamo(usuarios, codigo, codLibro, fecha);
     }
 }
@@ -39,19 +38,19 @@ void insertar_prestamo(void *&usuarios, int codigo, char *codLibro, char *fecha)
     void **&reg = reinterpret_cast<void**&>(usr[ind]);
     void **&prestArr = reinterpret_cast<void**&>(reg[2]);
     if (!prestArr) prestArr = new void*();
-    int numEl = inc_num_prestamos(usuarios, ind);
+    int numEl = inc_num_prestamos(usuarios, ind) - 1;
     void **prest = new void*[2];
     prest[0] = new char[strlen(codLibro) + 1];
     prest[1] = new char[strlen(fecha) + 1];
     strcpy(reinterpret_cast<char*>(prest[0]), codLibro);
     strcpy(reinterpret_cast<char*>(prest[1]), fecha);
-    if ((numEl - 1) % INCREMENTOS == 0) {   // usar aux
+    if (numEl % INCREMENTOS == 0) {
         void **aux = new void*[numEl + INCREMENTOS]();
         for (int i = 0; i < numEl; ++i) aux[i] = prestArr[i];
-        aux[numEl-1] = prest;
+        aux[numEl] = prest;
         prestArr = aux;
     } else {
-        prestArr[numEl-1] = prest;
+        prestArr[numEl] = prest;
     }
 }
 
