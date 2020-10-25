@@ -9,8 +9,8 @@
 #include <fstream>
 
 // funciones auxiliares para abrir archivos
-std::ifstream iopen_file(const char* name, std::ios_base::openmode mode);
-std::ofstream oopen_file(const char* name, std::ios_base::openmode mode);
+std::ifstream iopen_file(const char* name, std::ios_base::openmode mode = std::ios_base::in);
+std::ofstream oopen_file(const char* name, std::ios_base::openmode mode = std::ios_base::out);
 std::fstream open_file(const char* name, std::ios_base::openmode mode);
 
 // funciones para arreglos dinamicos

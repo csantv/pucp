@@ -18,13 +18,5 @@ int main(int argc, char** argv)
     repMedicos(codMed, nombMed, tarifas);
     leerAtenciones(codMed, codPac, nombPac, porcPac, veces);
 //    repDeIngresos(codMed, nombMed, tarifas, codPac, nombPac, porcPac);
-    int *arr = nullptr;
-    append_int(arr, 3);
-    append_int(arr, 4);
-    append_int(arr, 5);
-    append_int(arr, 6);
-    for (int i = 0; arr[i]; ++i) {
-        cout << arr[i] << endl;
-    }
     return 0;
 }

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-std::ifstream iopen_file(const char* name, std::ios_base::openmode mode)
+ifstream iopen_file(const char* name, ios_base::openmode mode)
 {
     ifstream file(name, mode);
     if (!file.is_open()) {
@@ -19,7 +19,7 @@ std::ifstream iopen_file(const char* name, std::ios_base::openmode mode)
     return file;
 }
 
-std::ofstream oopen_file(const char* name, std::ios_base::openmode mode)
+ofstream oopen_file(const char* name, ios_base::openmode mode)
 {
     ofstream file(name, mode);
     if (!file.is_open()) {
@@ -29,7 +29,7 @@ std::ofstream oopen_file(const char* name, std::ios_base::openmode mode)
     return file;
 }
 
-std::fstream open_file(const char* name, std::ios_base::openmode mode)
+fstream open_file(const char* name, ios_base::openmode mode)
 {
     fstream file(name, mode);
     if (!file.is_open()) {
