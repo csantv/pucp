@@ -19,9 +19,11 @@ project(INF281 CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
 add_executable(INF281
-        2019-2/lab5/main.cpp
-        2019-2/lab5/Funcioneslaboratorio05.cpp
-        2019-2/lab5/Funcioneslaboratorio05.h
-        2019-2/lab5/func-aux.cpp
-        2019-2/lab5/func-aux.h)
+        func-aux.cpp
+        func-aux.h
+        2018-1/lab6/main.cpp
+        2018-1/lab6/Bib_Func_Preg1.cpp
+        2018-1/lab6/Bib_Func_Preg1.h 2018-1/lab6/Bib_Func_Preg2.cpp 2018-1/lab6/Bib_Func_Preg2.h)

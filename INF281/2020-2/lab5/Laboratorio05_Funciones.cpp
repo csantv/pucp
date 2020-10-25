@@ -4,7 +4,7 @@
  */
 
 #include "Laboratorio05_Funciones.h"
-#include "func-aux.h"
+#include "../../func-aux.h"
 
 #include <iostream>
 #include <iomanip>
