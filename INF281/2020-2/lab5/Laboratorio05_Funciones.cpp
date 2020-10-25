@@ -4,10 +4,12 @@
  */
 
 #include "Laboratorio05_Funciones.h"
-#include "../../func-aux.h"
+#include "func-aux.h"
 
 #include <iostream>
 #include <iomanip>
+
+#define INCREMENTOS 5
 
 using namespace std;
 
@@ -54,7 +56,7 @@ void leerAtenciones(char **&codMed, int **&codPac, char ***&nombPac, double **&p
             atencion >> estado >> _ >> rcodPac >> _;
             if (atencion.fail()) { atencion.clear(); break; }
             atencion.getline(namePac, 50, ','); atencion >> porcentaje >> _;
-            atencion.getline(rcodMed, 7, ','); atencion >> ws;
+            atencion.getline(rcodMed, 7, ',');
             int indMed = get_med_index(codMed, rcodMed);
             repetido = register_veces(codPac, indMed, rcodPac, veces);
             if (!repetido) {
@@ -94,34 +96,30 @@ void insert_codpac(int **&codPac, int indMed, int codigo)
 {
     if (!codPac[indMed]) codPac[indMed] = new int {-1};
     int numEl = 0; while (codPac[indMed][numEl]) numEl++;
-    int *aux;
-    // calcular incrementos
-    if ((numEl + 1) % 5 == 0) {
-        aux = new int [numEl + 1]();
+    if (numEl % INCREMENTOS == 0) {
+        int *aux = new int [numEl + INCREMENTOS]();
+        for (int i = 0; i < numEl; ++i) aux[i] = codPac[indMed][i];
+        aux[numEl] = codigo;
+        delete[] codPac[indMed];
+        codPac[indMed] = aux;
     } else {
-        aux = new int [numEl + 5]();
+        codPac[indMed][numEl] = codigo;
     }
-    for (int i = 0; i < numEl; ++i) aux[i] = codPac[indMed][i];
-    aux[numEl] = codigo;
-    delete codPac[indMed];
-    codPac[indMed] = aux;
 }
 
 void insert_porcpac(double **&porcPac, int indMed, double porc)
 {
-    if (!porcPac[indMed]) porcPac[indMed] = new double {-1};
+    if (!porcPac[indMed]) porcPac[indMed] = new double();
     int numEl = 0; while (porcPac[indMed][numEl] != 0) numEl++;
-    double *aux;
-    // calcular incrementos
-    if ((numEl + 1) % 5 == 0) {
-        aux = new double [numEl + 1]();
+    if (numEl % INCREMENTOS == 0) {
+        double *aux = new double [numEl + INCREMENTOS]();
+        for (int i = 0; i < numEl; ++i) aux[i] = porcPac[indMed][i];
+        aux[numEl] = porc;
+        delete porcPac[indMed];
+        porcPac[indMed] = aux;
     } else {
-        aux = new double [numEl + 5]();
+        porcPac[indMed][numEl] = porc;
     }
-    for (int i = 0; i < numEl; ++i) aux[i] = porcPac[indMed][i];
-    aux[numEl] = porc;
-    delete porcPac[indMed];
-    porcPac[indMed] = aux;
 }
 
 void init_pac_arrays(int total, int **&codPac, char ***&nombPac, double **&porcPac, int **&veces)
@@ -134,9 +132,9 @@ void init_pac_arrays(int total, int **&codPac, char ***&nombPac, double **&porcP
 
 bool register_veces(int **&codPac, int indMed, int rcodPac, int **&veces)
 {
-    if (!codPac[indMed]) codPac[indMed] = new int {-1};
+    if (!codPac[indMed]) codPac[indMed] = new int();
     bool found = false;
-    for (int i = 0; codPac[indMed][i] != -1; ++i) {
+    for (int i = 0; codPac[indMed][i] != 0; ++i) {
         if (codPac[indMed][i] == rcodPac) {
             found = true;
             veces[indMed][i]++;
@@ -151,15 +149,14 @@ void insert_nombpac(char ***&nombPac, int indMed, char *namePac)
 {
     if (!nombPac[indMed]) nombPac[indMed] = new char* {nullptr};
     int numEl = 0; while (nombPac[indMed][numEl]) numEl++;
-    char **aux;
-    // calcular incrementos
-    if ((numEl + 1) % 5 == 0) {
-        aux = new char* [numEl + 1]();
+    if (numEl % INCREMENTOS == 0) {
+        char **aux = new char* [numEl + INCREMENTOS]();
+        for (int i = 0; i < numEl; ++i) aux[i] = nombPac[indMed][i];
+        aux[numEl] = new char [strlen(namePac) + 1];
+        strcpy(aux[numEl], namePac);
+        nombPac[indMed] = aux;
     } else {
-        aux = new char* [numEl + 5]();
+        nombPac[indMed][numEl] = new char [strlen(namePac) + 1];
+        strcpy(nombPac[indMed][numEl], namePac);
     }
-    for (int i = 0; i < numEl; ++i) aux[i] = nombPac[indMed][i];
-    aux[numEl] = new char [strlen(namePac) + 1];
-    strcpy(aux[numEl], namePac);
-    nombPac[indMed] = aux;
 }

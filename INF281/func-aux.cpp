@@ -52,24 +52,22 @@ void append_str(char **& arr, char* str)
 
 void append_double(double*& arr, double val)
 {
-    if (!arr) arr = new double {-1};
-    int numDat = 0; while (arr[numDat] != -1) numDat++;
-    double* aux = new double [numDat + 2];
+    if (!arr) arr = new double();
+    int numDat = 0; while (arr[numDat] != 0) numDat++;
+    double* aux = new double [numDat + 2]();
     for (int i = 0; i < numDat; ++i) aux[i] = arr[i];
     aux[numDat] = val;
-    aux[numDat + 1] = -1;
     delete[] arr;
     arr = aux;
 }
 
 void append_int(int*& arr, int val)
 {
-    if (!arr) arr = new int {-1};
-    int numDat = 0; while (arr[numDat] != -1) numDat++;
-    int* aux = new int [numDat + 2];
+    if (!arr) arr = new int();
+    int numDat = 0; while (arr[numDat] != 0) numDat++;
+    int* aux = new int [numDat + 2]();
     for (int i = 0; i < numDat; ++i) aux[i] = arr[i];
     aux[numDat] = val;
-    aux[numDat + 1] = -1;
     delete[] arr;
     arr = aux;
 }
