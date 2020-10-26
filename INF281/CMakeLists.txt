@@ -24,6 +24,4 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(INF281
         func-aux.cpp
         func-aux.h
-        2018-1/lab6/main.cpp
-        2018-1/lab6/Bib_Func_Preg1.cpp
-        2018-1/lab6/Bib_Func_Preg1.h 2018-1/lab6/Bib_Func_Preg2.cpp 2018-1/lab6/Bib_Func_Preg2.h)
+        2019-2/ex1/p2.cpp 2019-2/ex1/FuncionesParte02Ex1.cpp 2019-2/ex1/FuncionesParte02Ex1.h)
