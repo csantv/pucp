@@ -2,6 +2,7 @@
 #include "func-aux.h"
 
 #include <iostream>
+#include <iomanip>
 
 #define INCREMENTOS 5
 
@@ -92,10 +93,27 @@ void insert_conductor(char **&conductor, char *rnombre)
 void imprimirConductores(int *dni, char **conductor, char ***placas)
 {
     ofstream reporte = oopen_file("ReporteConductores.txt");
+    reporte << setfill(' ') << setw(23) << ""
+            << "REGISTRO DE CONDUCTORES" << endl
+            << setfill('=') << setw(66) << "" << endl
+            << setfill(' ') << setw(5) << "" << "DNI"
+            << setw(8) << "" << "CONDUCTOR" << setw(28) << ""
+            << "AUTOS" << endl << setfill('=') << setw(66) << "" << endl;
+    bool printnom = true;
     for (int i = 0; dni[i] != 0; ++i) {
+        reporte << setfill(' ') << setw(3) << right << i + 1 << ") " << dni[i] << " ";
         for (int j = 0; placas[i][j] ; ++j) {
-            reporte << dni[i] << " " << conductor[i] << " " << placas[i][j] << endl;
+            if (printnom) {
+                reporte << left << setw(38) << conductor[i] << j + 1 << ") "
+                        << placas[i][j] << endl;
+                printnom = false;
+                continue;
+            }
+            reporte << setfill(' ') << setw(52) << "" << j + 1 << ") "
+                    << placas[i][j] << endl;
         }
+        reporte << setfill('-') << setw(66) << "" << endl;
+        printnom = true;
     }
 }
 
@@ -133,9 +151,16 @@ void insert_multa(double *&multas, int codigo, double monto)
 void imprimirMultas(double *multas)
 {
     ofstream reporte = oopen_file("ReporteMultas.txt");
+    reporte << "  MULTAS POR INFRACCIONES DE TRANSITO" << endl
+            << setfill('=') << setw(39) << "" << endl
+            << setfill(' ') << setw(5) << "" << "CODIGO" << setw(9) << "" << "MULTA" << endl
+            << setfill('-') << setw(39) << "" << endl;
+    int num = 0;
     for (int i = 0; multas[i] != -1; ++i) {
         if (multas[i] != 0) {
-            reporte << i << " " << multas[i] << endl;
+            num++;
+            reporte << setfill(' ') << right << setw(3) << num << ") "
+                    << i << setw(8) << "" << setw(9) << right << fixed << setprecision(2) << multas[i] << endl;
         }
     }
 }
@@ -192,10 +217,32 @@ void init_montosxmultas_arr(char ***&placas, double ***&montosXMultas)
 void imprimirInfracCometidas(int *dni, char **conductor, char ***placas, double ***montosXMultas)
 {
     ofstream reporte = oopen_file("ReporteInfracciones.txt");
+    reporte << setfill(' ') << setw(25) << "" << "REGISTRO DE CONDUCTORES" << endl
+            << setfill('=') << setw(83) << "" << endl
+            << setfill(' ') << setw(5) << "" << "DNI"
+            << setw(8) << "" << "CONDUCTOR"
+            << setw(35) << "" << "AUTOS"
+            << setw(9) << "" << "MULTAS" << endl
+            << setfill('=') << setw(83)  << "" << endl;
+    bool printnom = true;
+    double total = 0;
     for (int i = 0; dni[i]; ++i) {
+        reporte << setfill(' ') << right << setw(3) << i + 1 << ") " << dni[i];
         for (int j = 0; placas[i][j]; ++j) {
-            reporte << dni[i] << " " << conductor[i] << " "
-                    << placas[i][j] << " " << montosXMultas[i][0][j] << endl;
+            if (printnom) {
+                printnom = false;
+                reporte << "   " << left << setw(42) << conductor[i];
+                total = *montosXMultas[i][1];
+            } else {
+                reporte << setw(58) << "";
+            }
+            reporte << j + 1 << ") " << placas[i][j]
+                    << setfill(' ') << right << setw(12)
+                    << fixed << setprecision(2) << montosXMultas[i][0][j] << endl;
         }
+        reporte << setfill(' ') << setw(61) << "" << "Total:"
+                << setw(13) << fixed << right << setprecision(2) << total << endl
+                << setfill('-') << setw(83) << "" << endl;
+        printnom = true;
     }
 }
