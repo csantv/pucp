@@ -1,0 +1,3 @@
+Declare fecha : date#
+
+showdate fecha#

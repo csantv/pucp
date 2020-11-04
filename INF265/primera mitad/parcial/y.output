@@ -1,0 +1,341 @@
+Terminales no usados en la gramática
+
+   ENTONCES
+   PARA
+   REPETIR
+   MIENTRAS
+   ENTERO
+   DECIMAL
+   MUESTRA
+   SUMAR
+   SALTARF
+   SALTAR
+   ASIGNAR
+   RESTAR
+   MULTIPLICAR
+   MAYOR
+   IMPRIMIR
+   MENOR
+   LECTURA
+   LEER
+
+
+Gramática
+
+    0 $accept: programa $end
+
+    1 programa: instr
+
+    2 instr: asignacion ';'
+    3      | selectiva
+
+    4 asignacion: ID IGUAL expr
+
+    5 expr: expr '+' factor
+    6     | factor
+
+    7 factor: NUMBER
+    8       | ID
+
+    9 cond: expr '<' expr
+
+   10 selectiva: SI '(' cond ')' '{' instr '}' SINO '{' instr '}'
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'(' (40) 10
+')' (41) 10
+'+' (43) 5
+';' (59) 2
+'<' (60) 9
+'{' (123) 10
+'}' (125) 10
+error (256)
+NUMBER (258) 7
+SI (259) 10
+IGUAL (260) 4
+ENTONCES (261)
+PARA (262)
+REPETIR (263)
+ID (264) 4 8
+SINO (265) 10
+MIENTRAS (266)
+ENTERO (267)
+DECIMAL (268)
+MUESTRA (269)
+SUMAR (270)
+SALTARF (271)
+SALTAR (272)
+ASIGNAR (273)
+RESTAR (274)
+MULTIPLICAR (275)
+MAYOR (276)
+IMPRIMIR (277)
+MENOR (278)
+LECTURA (279)
+LEER (280)
+
+
+No terminales con las reglas donde aparecen
+
+$accept (33)
+    en la izquierda: 0
+programa (34)
+    en la izquierda: 1, en la derecha: 0
+instr (35)
+    en la izquierda: 2 3, en la derecha: 1 10
+asignacion (36)
+    en la izquierda: 4, en la derecha: 2
+expr (37)
+    en la izquierda: 5 6, en la derecha: 4 5 9
+factor (38)
+    en la izquierda: 7 8, en la derecha: 5 6
+cond (39)
+    en la izquierda: 9, en la derecha: 10
+selectiva (40)
+    en la izquierda: 10, en la derecha: 3
+
+
+Estado 0
+
+    0 $accept: . programa $end
+
+    SI  desplazar e ir al estado 1
+    ID  desplazar e ir al estado 2
+
+    programa    ir al estado 3
+    instr       ir al estado 4
+    asignacion  ir al estado 5
+    selectiva   ir al estado 6
+
+
+Estado 1
+
+   10 selectiva: SI . '(' cond ')' '{' instr '}' SINO '{' instr '}'
+
+    '('  desplazar e ir al estado 7
+
+
+Estado 2
+
+    4 asignacion: ID . IGUAL expr
+
+    IGUAL  desplazar e ir al estado 8
+
+
+Estado 3
+
+    0 $accept: programa . $end
+
+    $end  desplazar e ir al estado 9
+
+
+Estado 4
+
+    1 programa: instr .
+
+    $default  reduce usando la regla 1 (programa)
+
+
+Estado 5
+
+    2 instr: asignacion . ';'
+
+    ';'  desplazar e ir al estado 10
+
+
+Estado 6
+
+    3 instr: selectiva .
+
+    $default  reduce usando la regla 3 (instr)
+
+
+Estado 7
+
+   10 selectiva: SI '(' . cond ')' '{' instr '}' SINO '{' instr '}'
+
+    NUMBER  desplazar e ir al estado 11
+    ID      desplazar e ir al estado 12
+
+    expr    ir al estado 13
+    factor  ir al estado 14
+    cond    ir al estado 15
+
+
+Estado 8
+
+    4 asignacion: ID IGUAL . expr
+
+    NUMBER  desplazar e ir al estado 11
+    ID      desplazar e ir al estado 12
+
+    expr    ir al estado 16
+    factor  ir al estado 14
+
+
+Estado 9
+
+    0 $accept: programa $end .
+
+    $default  aceptar
+
+
+Estado 10
+
+    2 instr: asignacion ';' .
+
+    $default  reduce usando la regla 2 (instr)
+
+
+Estado 11
+
+    7 factor: NUMBER .
+
+    $default  reduce usando la regla 7 (factor)
+
+
+Estado 12
+
+    8 factor: ID .
+
+    $default  reduce usando la regla 8 (factor)
+
+
+Estado 13
+
+    5 expr: expr . '+' factor
+    9 cond: expr . '<' expr
+
+    '+'  desplazar e ir al estado 17
+    '<'  desplazar e ir al estado 18
+
+
+Estado 14
+
+    6 expr: factor .
+
+    $default  reduce usando la regla 6 (expr)
+
+
+Estado 15
+
+   10 selectiva: SI '(' cond . ')' '{' instr '}' SINO '{' instr '}'
+
+    ')'  desplazar e ir al estado 19
+
+
+Estado 16
+
+    4 asignacion: ID IGUAL expr .
+    5 expr: expr . '+' factor
+
+    '+'  desplazar e ir al estado 17
+
+    $default  reduce usando la regla 4 (asignacion)
+
+
+Estado 17
+
+    5 expr: expr '+' . factor
+
+    NUMBER  desplazar e ir al estado 11
+    ID      desplazar e ir al estado 12
+
+    factor  ir al estado 20
+
+
+Estado 18
+
+    9 cond: expr '<' . expr
+
+    NUMBER  desplazar e ir al estado 11
+    ID      desplazar e ir al estado 12
+
+    expr    ir al estado 21
+    factor  ir al estado 14
+
+
+Estado 19
+
+   10 selectiva: SI '(' cond ')' . '{' instr '}' SINO '{' instr '}'
+
+    '{'  desplazar e ir al estado 22
+
+
+Estado 20
+
+    5 expr: expr '+' factor .
+
+    $default  reduce usando la regla 5 (expr)
+
+
+Estado 21
+
+    5 expr: expr . '+' factor
+    9 cond: expr '<' expr .
+
+    '+'  desplazar e ir al estado 17
+
+    $default  reduce usando la regla 9 (cond)
+
+
+Estado 22
+
+   10 selectiva: SI '(' cond ')' '{' . instr '}' SINO '{' instr '}'
+
+    SI  desplazar e ir al estado 1
+    ID  desplazar e ir al estado 2
+
+    instr       ir al estado 23
+    asignacion  ir al estado 5
+    selectiva   ir al estado 6
+
+
+Estado 23
+
+   10 selectiva: SI '(' cond ')' '{' instr . '}' SINO '{' instr '}'
+
+    '}'  desplazar e ir al estado 24
+
+
+Estado 24
+
+   10 selectiva: SI '(' cond ')' '{' instr '}' . SINO '{' instr '}'
+
+    SINO  desplazar e ir al estado 25
+
+
+Estado 25
+
+   10 selectiva: SI '(' cond ')' '{' instr '}' SINO . '{' instr '}'
+
+    '{'  desplazar e ir al estado 26
+
+
+Estado 26
+
+   10 selectiva: SI '(' cond ')' '{' instr '}' SINO '{' . instr '}'
+
+    SI  desplazar e ir al estado 1
+    ID  desplazar e ir al estado 2
+
+    instr       ir al estado 27
+    asignacion  ir al estado 5
+    selectiva   ir al estado 6
+
+
+Estado 27
+
+   10 selectiva: SI '(' cond ')' '{' instr '}' SINO '{' instr . '}'
+
+    '}'  desplazar e ir al estado 28
+
+
+Estado 28
+
+   10 selectiva: SI '(' cond ')' '{' instr '}' SINO '{' instr '}' .
+
+    $default  reduce usando la regla 10 (selectiva)

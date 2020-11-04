@@ -1,0 +1,13 @@
+int main(){
+	int z;
+	int w;
+	z=0;
+	w=1;
+	while(z<20){
+	    w=w+1;
+	    if(z<10){
+		printf z;
+	    }
+	    z=z+1;
+	}
+}

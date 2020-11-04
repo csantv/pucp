@@ -1,0 +1,62 @@
+Cadena
+
+if (z<10) {
+	z=z+2;
+}
+else {
+	z=z+1;
+}
+
+Pasandolo a tokens...
+
+1 SI ( ID < NUMBER ) {
+2	ID = ID + NUMBER;
+3 }
+4 SINO {
+5	ID = ID + NUMBER;
+6 }
+
+Validando cadena...
+
+- la cadena tiene la forma de la regla R33 si solo nos fijamos en los tokens
+y, falta validar las demas reglas internas
+
+1. SI '(' cond ')' '{'
+2. 	instr
+3. '}' SINO '{'
+4. 	instr
+5. '}'
+
+- validar cond de la linea 1
+
+cond debe tener la forma de expr '<' expr y se tiene ID '<' NUMBER. Para que sea
+valida, ID y NUMBER deben ser expr. Si utilizamos R15, se tiene que expr es factor,
+y utilizando la R16 y R18, factor puede ser ID o NUMBER. Como puede ser ID o 
+NUMBER, entonces es correcto.
+
+- validar instr de la linea 2
+
+Se tiene ID = ID + NUMBER;;
+Esto podria ser una asignacion utilizando R10. R10 dice lo siguiente:
+asignacion: ID IGUAL expr . Hasta ahora se tiene la primera parte, ID e IGUAL, 
+falta validar que expr sea valida. Utilizando R11 tenemos que
+expr: expr '+' factor y utilizando R15 tenemos que expr puede ser factor y
+utilizando R16 y R18 se tiene que factor puede ser NUMBER o ID. Utilizando estas
+reglas, se entiende que expr podria ser:
+
+expr: factor '+' factor
+
+reemplazando factores por lo que queremos se tiene:
+
+expr: ID + NUMBER
+
+y como esto es lo que tenemos, la asignacion seria valida. 
+
+- validar instr de la linea 4
+
+La validacion es la misma que instr de la linea 2 ya que tambien se tiene la
+misma combinacion de tokens que en la linea 2
+
+ID = ID + NUMBER;
+
+Conclusion: La cadena es valida

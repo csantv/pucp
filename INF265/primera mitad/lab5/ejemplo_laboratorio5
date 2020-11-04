@@ -1,0 +1,19 @@
+int z;
+int p;
+int w;
+z=0;
+p=3<5+3;
+read w;
+printf 5;
+while(z<20){
+    w=w+1;
+    if(z<10){
+        printf z;
+    }
+    z=z+1;
+}
+x=1
+do{
+    x++;
+    printf x;	
+}while(x<4);

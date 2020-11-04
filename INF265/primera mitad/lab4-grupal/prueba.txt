@@ -1,0 +1,67 @@
+Declare cantNotas,suma : number #
+Declare fecha : date#
+
+
+fecha : 20201002#
+
+
+suma:(5 * 2) + 2#
+cantNotas:13#
+
+
+Inc suma,cantNotas#
+show "Variable suma"#
+show suma#
+show "Variable cantNotas"#
+show cantNotas#
+Dec suma,cantNotas#
+
+
+Select cantNotas:
+    Case 6: show "Hola que tal"# #
+    Case 13: show "Que pasa"# #
+#
+
+While (cantNotas>0) Loop:
+    show "Nota:"#
+    show cantNotas#
+    Dec cantNotas#
+#
+
+cantNotas : 5 #
+
+For cantNotas Loop:
+    showtitle "Cantidad de notas" #
+    show cantNotas#
+    showline '-' #
+    show suma#
+    Dec suma#
+#
+
+suma:10#
+cantNotas:10#
+Condition (suma equals cantNotas):
+    show "Son iguales"#
+#
+
+show "El nombre es:"#
+showname "lenguaje obsidian" #
+show endl#
+
+
+showdate fecha#
+show endl#
+
+show "Fin exitoso"#
+
+show "Diferencia fechas:"#
+showage 20152665 , 20201010 #
+show endl#
+
+toDate fecha : "10/05/2020" #
+show "Fecha como numero:"#
+show fecha#
+show "La fecha es:"#
+showdate fecha #
+
+

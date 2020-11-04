@@ -1,0 +1,6 @@
+int z;
+int w;
+z=10;
+while(z>10+2) {
+    z=z-1;
+}

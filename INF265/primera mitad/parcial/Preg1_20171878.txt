@@ -1,0 +1,18 @@
+Cadena a tokens:
+
+ID = NUMBER ;
+MIENTRAS (ID < NUMBER) {
+	SI (ID < NUMBER) {
+		MUESTRA ID;
+	}
+	ID = ID + NUMBER;
+}
+}
+
+Conclusion:
+
+La cadena se conluiria como valida de acuerdo a nuestro arbol de derivacion, a
+excepcion de la ultima cierro de llaves puesto que no hay ninguna regla que
+la pueda manejar. Posiblemente pudo haber sido manejada por la regla de selectiva
+pero faltaba el token SINO y el caracter '{' para poder aplicar la regla R33.
+
