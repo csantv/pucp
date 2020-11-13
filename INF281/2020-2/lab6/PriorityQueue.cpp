@@ -48,9 +48,12 @@ void encolar(void *&cola, void *prio, void *val, int (*comp) (const void*, const
 void* desencolar(void *&cola)
 {
     void **&reg = reinterpret_cast<void**&>(cola);
-    void **nodo = reinterpret_cast<void**>(reg[INI]);
-    reg[INI] = nodo[SIG];
-    return nodo;
+    if (*reg) {
+        void **nodo = reinterpret_cast<void**>(reg[INI]);
+        reg[INI] = nodo[SIG];
+        return nodo;
+    }
+    return nullptr;
 }
 
 void prueba(void *&cola, void (*print) (const void*))
