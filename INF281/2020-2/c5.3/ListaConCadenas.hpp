@@ -1,0 +1,8 @@
+//
+// Created by cst on 11/12/20.
+//
+
+#ifndef INF281_LISTACONCADENAS_HPP
+#define INF281_LISTACONCADENAS_HPP
+
+#endif //INF281_LISTACONCADENAS_HPP
