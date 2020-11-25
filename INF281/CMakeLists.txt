@@ -22,6 +22,5 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(INF281
-        func-aux.cpp
-        func-aux.h
-        2019-2/ex1/p2.cpp 2019-2/ex1/FuncionesParte02Ex1.cpp 2019-2/ex1/FuncionesParte02Ex1.h)
+        2020-2/lab6/PriorityQueue.cpp
+        2020-2/lab6/PriorityQueue.h)

@@ -2,15 +2,20 @@
 // Created by cst on 11/17/20.
 //
 
-#ifndef INF281_CLASERECTANGULO_HPP
-#define INF281_CLASERECTANGULO_HPP
+#ifndef INF281_RECTANGULO_HPP
+#define INF281_RECTANGULO_HPP
 
-class ClaseRectangulo {
+class Rectangulo {
 private:
     char *nombre;
     double base;
     double altura;
 public:
+    Rectangulo();
+    Rectangulo(const char* nombre, double base, double altura);
+    Rectangulo(const Rectangulo& rhs);
+    ~Rectangulo();
+
     void setBase(double value);
     void setAltura(double value);
     double getBase() const;
@@ -24,8 +29,7 @@ public:
 
     void getNombre(char *cad) const;
     void setNombre(const char *value);
-    void inicializarNombre();
 };
 
 
-#endif //INF281_CLASERECTANGULO_HPP
+#endif //INF281_RECTANGULO_HPP
