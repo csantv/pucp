@@ -15,13 +15,16 @@ set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_C_LINK_EXECUTABLE})
 
 # nasm sources
 set(ASM_SRC
-    #hello64.s
-    #geometricSerieASM.asm
+	lab4/pc.s
+	#ex1/calc_asm.asm
+	#ex1-sim/taylor_sin.s
 )
 
 # c sources
 set(C_SRC
-    retos6/2.c
+	lab4/pc.c
+	#ex1/pregunta3.c
+	#ex1-sim/taylor_sin.c
     #preg2.c
 )
 
