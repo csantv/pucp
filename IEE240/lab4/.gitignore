@@ -1,0 +1,5 @@
+lab4
+effectASM.o
+effectSIMD.o
+outputImg.pgm
+*.pgm

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-extern void instructionTest(float *v, float *u, float *w, int N);
+extern float instructionTest(float *v, float *u, float *w, int N);
 void genVectors(float *v, int N);
 void printVectors(float *v, int N);
 
@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
 	srand(time(NULL));
 	float *v, *u, *w;
-	int N = 8;
+	int N = 4;
 	posix_memalign((void**)&v, 16, N * sizeof(float));
 	posix_memalign((void**)&u, 16, N * sizeof(float));
 	posix_memalign((void**)&w, 16, N * sizeof(float));
@@ -19,9 +19,9 @@ int main(int argc, char **argv)
 	genVectors(u, N);
 
 	printVectors(v, N);
-	// printVectors(u, N);
+	printVectors(u, N);
 
-	instructionTest(v, u, w, N);
+	printf("%lf\n", instructionTest(v, u, w, N));
 
 	printVectors(w, N);
 
