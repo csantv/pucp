@@ -1,0 +1,4 @@
+1/01/2020
+R    891472    Virginia/Chumpitaz    9.33
+A    850963    Rafael/Urbina    10.7
+R    733943    Alberto/De    34.98

@@ -1,25 +1,25 @@
 #include "Rectangulo.hpp"
+#include "Cadena.hpp"
 #include <iostream>
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    Rectangulo rectangulo, rect01("Segundo Rectangulo", 5.9, 10.75);
-    Rectangulo *ptr;
+    Cadena cad1 ("Carlos Toro Vera");
+    Cadena cad2 ("Awebo");
 
-    rectangulo.setNombre("Primer Rectangulo");
-    rectangulo.setBase(14.78);
-    rectangulo.setAltura(25.98);
-    rectangulo.imprimeResultados();
+    cad1.print();
+    cad2.print();
 
-    rect01.imprimeResultados();
-//    auto ptr = new Rectangulo("PT Rectangulo", 1, 2);
-//
-//    ptr->imprimeResultados();
-//    delete ptr;
-    ptr = new Rectangulo[5];
-    delete[] ptr;
+    cad1.swap(cad2);
 
+    cad1.print();
+    cad2.print();
+
+    Cadena cad3;
+    cad3 = cad1 + cad2;
+
+    cad3.print();
     return 0;
 }
