@@ -22,10 +22,16 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(INF281
-        2020-2/lab7/p1.cpp
-        2020-2/lab7/Medico.cpp
-        2020-2/lab7/Medico.h
-        2020-2/lab7/Paciente.cpp
-        2020-2/lab7/Paciente.h
-        2020-2/lab7/func-aux.cpp
-        2020-2/lab7/func-aux.h)
+        2020-2/lab9/Paciente.cpp
+        2020-2/lab9/Paciente.h
+        2020-2/lab9/Ambulatorio.cpp
+        2020-2/lab9/Ambulatorio.h
+        2020-2/lab9/Urgencia.cpp
+        2020-2/lab9/Urgencia.h
+        2020-2/lab9/Emergencia.cpp
+        2020-2/lab9/Emergencia.h
+        2020-2/lab9/p2.cpp
+        2020-2/lab9/ListaDePacientes.cpp
+        2020-2/lab9/ListaDePacientes.h
+        2020-2/lab9/NodoPaciente.cpp
+        2020-2/lab9/NodoPaciente.h)
