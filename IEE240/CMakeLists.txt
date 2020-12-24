@@ -19,9 +19,11 @@ set(CMAKE_ASM_NASM_LINK_EXECUTABLE ${CMAKE_C_LINK_EXECUTABLE})
 
 # nasm sources
 set(ASM_SRC
+	e2sim/preg2ASM.asm
+	e2sim/preg2ASMSIMD.asm
 	#lab1-simd/pregunta2/imhist.asm
-	lab4/codes/effectASM.asm
-	lab4/codes/effectSIMD.asm
+	#lab4/codes/effectASM.asm
+	#lab4/codes/effectSIMD.asm
 	#lab2-simd/pregunta2/geometricSerieASM.asm
 	#ex1/calc_asm.asm
 	#ex1-sim/taylor_sin.s
@@ -29,11 +31,14 @@ set(ASM_SRC
 
 # c sources
 set(C_SRC
+	e2sim/preg2.c
+	#lab5/pregunta4.c
+	#lab5/readimglib.h
 	#lab1-simd/pregunta2/testImhist.c
 	#lab1-simd/pregunta2/readimglib.h
 	#lab2-simd/pregunta2/preg2.c
-	lab4/codes/preg.c
-	lab4/codes/readimglib.h
+	#lab4/codes/preg.c
+	#lab4/codes/readimglib.h
 	#wea.c
 	#ex1/pregunta3.c
 	#ex1-sim/taylor_sin.c
